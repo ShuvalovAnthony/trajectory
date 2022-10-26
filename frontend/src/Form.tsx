@@ -28,12 +28,12 @@ export const FormApp: Component = () => {
         event.preventDefault();
         try {
             await formHandler.validateForm();
-            fetch('http://127.0.0.1:8000/api/v1/topic/', {
+            fetch('http://127.0.0.1:8000/api/v1/step/', {
                 method: 'POST',
                 headers: {
                     'Accept-Encoding': 'gzip, deflate, br',
                     'Content-Type': 'application/json',
-                    'Authorization': "Token b59184f08e80365dd1986d8c832187a866cd7217"
+                    'Authorization': "Token 3409f235823eaa9403effd9646556694f9cabbe9"
                 },
                 body: JSON.stringify(formData())
             });
@@ -45,7 +45,7 @@ export const FormApp: Component = () => {
     };
 
     return (
-        <div class="container-fluid">
+        
             <div class="container">
                 <div class="row">
                     <div class="col">
@@ -68,7 +68,6 @@ export const FormApp: Component = () => {
                     </div>
                 </div>
             </div>
-        </div>
     );
 };
 export default FormApp; 

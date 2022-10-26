@@ -6,7 +6,7 @@ import * as yup from 'yup';
 
 
 const fetchTopic = async (id: number) =>
-    (await fetch(`http://127.0.0.1:8000/api/v1/topic/${id}`)).json();
+    (await fetch(`http://127.0.0.1:8000/api/v1/step/${id}`)).json();
 
 type TopicId = {
     topicid: number;
@@ -39,7 +39,7 @@ export const SearchApp: Component = () => {
                         {topic() && (
                             <section>
                                 <h1>{topic().title}</h1>
-                                <p>{topic().category}</p>
+                                <p>{topic().content}</p>
                             </section>
                         )}
                     </div>
