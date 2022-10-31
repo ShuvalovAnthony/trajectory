@@ -1,13 +1,12 @@
-from email.policy import default
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import CustomUser
 
 
 class Course(models.Model):
     title = models.CharField(max_length=30)
     description = models.CharField(max_length=120)
     status = models.BooleanField(default=False)
-    user = models.ForeignKey(User, verbose_name='User', on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, verbose_name='User', on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.title
@@ -62,3 +61,12 @@ class File(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+
+class Note(models.Model):
+    user = models.ForeignKey(CustomUser, verbose_name='User', on_delete=models.CASCADE)
+    step = models.ForeignKey(Step, verbose_name='Step', on_delete=models.CASCADE)
+    note = models.CharField(max_length=255)
+
+    def __str__(self) -> str:
+        return self.note
