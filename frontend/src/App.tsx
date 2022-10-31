@@ -9,7 +9,7 @@ export default function App() {
   return <>
     <Routes>
       <Route path="/" component={Mainpage} />
-      <Route path="/plans" component={Planpage} />
+      <Route path="/courses" component={Planpage} />
     </Routes>
   </>
 }

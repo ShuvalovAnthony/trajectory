@@ -40,24 +40,24 @@ const Planpage = () => {
         <main class="d-flex">
             <div class="flex-shrink-0 p-3 bg-dark" style="width: 200px;">
                 <a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
-                    <span class="fs-2 fw-semibold">Plan</span>
+                    <span class="fs-3 fw-semibold">Themes list</span>
                 </a>
                 <ul class="list-unstyled ps-0">
                     <For each={themes()}>{(theme: any, index: Accessor<number>) =>
-                        <li class="mb-1">
+                        <li class="mb-0">
                             <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target={'#' + theme.title} aria-expanded="false">
                                 {theme.title}
                             </button>
 
                             <div class="collapse" id={theme.title}>
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-0 small">
 
                                     <For each={steps()}>
                                         {(step: any, index: Accessor<number>) => {
                                             if (step.theme == theme.id) {
                                                 return <>
                                                     <button class="btn d-inline-flex align-items-center rounded border-0" onClick={toggle}>
-                                                        <a href={"#" + step.title} data-stepid={step.id} class="link-light d-inline-flex text-decoration-none rounded">
+                                                        <a data-stepid={step.id} class="link-light d-inline-flex text-decoration-none rounded small">
                                                             {step.title} {step.id}
                                                         </a>
                                                     </button>
@@ -71,13 +71,17 @@ const Planpage = () => {
                     }</For>
                 </ul>
             </div>
-            <div>
+            <div class="container-fluid">
                 {step() && (
-                    <section>
-                        <h1>{step().title}</h1>
-                        <p>{step().theme}</p>
-                        <p>{step().description}</p>
-                    </section>
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-9">
+                            <h1>{step().title}</h1>
+                            <p>{step().theme}</p>
+                            <p>{step().description}</p>
+                        </div>
+                        <div class="col"></div>
+                    </div>
                 )}
             </div>
         </main>

@@ -3,11 +3,11 @@ from rest_framework import serializers
 from .models import * 
 
 
-class PlanSerializer(serializers.ModelSerializer):
+class CourseSerializer(serializers.ModelSerializer):
    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
    class Meta:
-      model = Plan
+      model = Course
       fields = "__all__"
 
 

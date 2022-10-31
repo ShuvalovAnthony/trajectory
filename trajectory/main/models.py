@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class Plan(models.Model):
+class Course(models.Model):
     title = models.CharField(max_length=30)
     description = models.CharField(max_length=120)
     status = models.BooleanField(default=False)
@@ -14,7 +14,7 @@ class Plan(models.Model):
 
 
 class Theme(models.Model):
-    plan = models.ForeignKey('Plan', on_delete=models.PROTECT, null=True)
+    course = models.ForeignKey('Course', on_delete=models.PROTECT, null=True)
     status = models.ForeignKey('ThemeStatus', on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=30)
     description = models.CharField(max_length=120)

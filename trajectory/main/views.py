@@ -1,5 +1,5 @@
 from rest_framework import viewsets, pagination
-from .serializers import StepSerializer, ThemeSerializer, PlanSerializer
+from .serializers import CourseSerializer, StepSerializer, ThemeSerializer
 from .models import *
 from .permissions import IsAdminOrReadOnly
 from django.http.response import HttpResponse
@@ -31,9 +31,9 @@ class ThemeViewSet(viewsets.ModelViewSet):
     pagination_class = APIListPagination
 
 
-class PlanViewSet(viewsets.ModelViewSet):
-    queryset = Plan.objects.all()
-    serializer_class = PlanSerializer
+class CourseViewSet(viewsets.ModelViewSet):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
     permission_classes = ()
     pagination_class = APIListPagination
 
