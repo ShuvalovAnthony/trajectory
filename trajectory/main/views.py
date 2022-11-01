@@ -22,7 +22,7 @@ class StepViewSet(viewsets.ModelViewSet):
     @action(methods=['get'], detail=True) # detailFalse - для списка
     def steps_by_theme(self, request, pk=None):
         steps = Step.objects.filter(theme_id=pk) #pk категории стоит в url step/1/steps_by_theme/
-        return Response({'steps': [{s.id: s.title} for s in steps]})
+        return Response({'steps': [{"id": s.id, "title": s.title} for s in steps]})
 
 
 class ThemeViewSet(viewsets.ModelViewSet):
@@ -49,7 +49,7 @@ class NoteViewSet(viewsets.ModelViewSet):
     def note_by_step(self, request, pk=None):
         notes = Note.objects.filter(step_id=pk) #pk категории стоит в url step/1/steps_by_theme/
         
-        return Response({'notes': [{n.id: n.note} for n in notes]})
+        return Response({'notes': [n.note for n in notes]})
 
 
 def test(request):

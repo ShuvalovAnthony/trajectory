@@ -20,13 +20,13 @@ const Planpage = () => {
     const [themes, setThemes] = createSignal();
     const [steps, setSteps] = createSignal();
     const [stepId, setStepId] = createSignal(1);
-    const [notes, setNotes] = createSignal();
+    const [notes, setNotes] = createSignal(1);
     const [themesList] = createResource(fetchThemes);
     const [stepsList] = createResource(fetchSteps);
+    const [notesList] = createResource(stepId, fetchNotes);
     const [step] = createResource(stepId, fetchStep);
-    const [note] = createResource(stepId, fetchNotes);
 
-    const toggle = (e: any) => {
+    const toggle = (e: any) => {        
         const stepid = parseInt(e.target.dataset.stepid);
         setStepId(stepid);
     }
@@ -35,9 +35,7 @@ const Planpage = () => {
         if (themesList() && stepsList()) {
             setThemes(themesList().results);
             setSteps(stepsList().results);
-            setNotes(note().notes);
-            console.log(notes());
-            
+            setNotes(notesList().notes);
         }
     })
 
@@ -53,7 +51,7 @@ const Planpage = () => {
                             <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target={'#' + theme.slug} aria-expanded="false">
                                 {theme.title}
                             </button>
-                            <div class="collapse show" id={theme.slug}>
+                            <div class="collapse" id={theme.slug}>
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-0 small">
                                     <For each={steps()}>
                                         {(step: any, index: Accessor<number>) => {
@@ -63,8 +61,7 @@ const Planpage = () => {
                                                         <a data-stepid={step.id} class="link-light d-inline-flex text-decoration-none rounded small">
                                                             {step.title}
                                                         </a>
-                                                    </button>
-                                                </>
+                                                    </button></>
                                             }
                                         }}
                                     </For>
@@ -75,26 +72,33 @@ const Planpage = () => {
                 </ul>
             </div>
             <div class="container-fluid p-3 ">
-                {step() && (
-                    <div class="row">
-                        <div class="col-8">
-                            <a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
-                                <span class="fs-3 fw-semibold">{step().title}</span>
-                            </a>
-
-                            <div innerHTML={step().content}>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
-                                <span class="fs-3 fw-semibold">Заметки</span>
-                            </a>
-                        </div>
+                <div class="row">
+                    <div class="col-8">
+                        {step() && (
+                            <>
+                                <a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
+                                    <span class="fs-3 fw-semibold">{step().title}</span>
+                                </a>
+                                <div innerHTML={step().content}>
+                                </div>
+                            </>
+                        )}
                     </div>
-                )}
+                    <div class="col">
+                        <a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
+                            <span class="fs-3 fw-semibold">Заметки</span>
+                        </a>
+                        <For each={notes()}>
+                            {(note: any, index: Accessor<number>) => {
+                                return <>
+                                    <p>{note}</p>
+                                </>
+                            }}
+                        </For>
+                    </div>
+                </div>
             </div>
         </main>
-
     );
 };
 
