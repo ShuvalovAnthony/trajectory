@@ -23,3 +23,11 @@ class StepSerializer(serializers.ModelSerializer):
    class Meta:
       model = Step
       fields = "__all__"
+
+
+class NoteSerializer(serializers.ModelSerializer):
+   user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+   class Meta:
+      model = Note
+      fields = "__all__"

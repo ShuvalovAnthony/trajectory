@@ -1,14 +1,14 @@
 from django.contrib import admin
 from django.urls import path, include, re_path
 
-from main.views import StepViewSet, ThemeViewSet, CourseViewSet, test
+from main.views import *
 from rest_framework import routers
 
 router = routers.DefaultRouter() 
 router.register(r'step', StepViewSet)
 router.register(r'theme', ThemeViewSet)
 router.register(r'course', CourseViewSet)
-
+router.register(r'note', NoteViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
