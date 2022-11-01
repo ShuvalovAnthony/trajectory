@@ -37,8 +37,8 @@ const fetchNotes = async (stepid: number) =>
 const Planpage = () => {
     const [themes, setThemes] = createSignal();
     const [steps, setSteps] = createSignal();
-    const [stepId, setStepId] = createSignal(1);
-    const [notes, setNotes] = createSignal(1);
+    const [stepId, setStepId] = createSignal(0);
+    const [notes, setNotes] = createSignal(0);
     const [themesList] = createResource(fetchThemes);
     const [stepsList] = createResource(fetchSteps);
     const [notesList] = createResource(stepId, fetchNotes);
