@@ -20,6 +20,7 @@ const Planpage = () => {
     const [themesList] = createResource(fetchThemes);
     const [stepsList] = createResource(fetchSteps);
     const [step] = createResource(stepId, fetchStep);
+    
 
     const toggle = (e: any) => {
         const stepid = parseInt(e.target.dataset.stepid);
@@ -31,6 +32,8 @@ const Planpage = () => {
         if (themesList() && stepsList()) {
             setThemes(themesList().results);
             setSteps(stepsList().results);
+            console.log(step().content);
+            
         }
     })
 
@@ -38,18 +41,18 @@ const Planpage = () => {
 
     return (
         <main class="d-flex">
-            <div class="flex-shrink-0 p-3 bg-dark" style="width: 200px;">
+            <div class="flex-shrink-0 p-3 bg-dark" style="width: 260px;">
                 <a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
                     <span class="fs-3 fw-semibold">Themes list</span>
                 </a>
                 <ul class="list-unstyled ps-0">
                     <For each={themes()}>{(theme: any, index: Accessor<number>) =>
                         <li class="mb-0">
-                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target={'#' + theme.title} aria-expanded="false">
+                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target={'#' + theme.slug} aria-expanded="false">
                                 {theme.title}
                             </button>
 
-                            <div class="collapse" id={theme.title}>
+                            <div class="collapse" id={theme.slug}>
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-0 small">
 
                                     <For each={steps()}>
@@ -58,7 +61,7 @@ const Planpage = () => {
                                                 return <>
                                                     <button class="btn d-inline-flex align-items-center rounded border-0" onClick={toggle}>
                                                         <a data-stepid={step.id} class="link-light d-inline-flex text-decoration-none rounded small">
-                                                            {step.title} {step.id}
+                                                            {step.title}
                                                         </a>
                                                     </button>
                                                 </>
@@ -77,8 +80,8 @@ const Planpage = () => {
                         <div class="col-1"></div>
                         <div class="col-9">
                             <h1>{step().title}</h1>
-                            <p>{step().theme}</p>
-                            <p>{step().description}</p>
+                            <div innerHTML={step().content}>
+                            </div>
                         </div>
                         <div class="col"></div>
                     </div>

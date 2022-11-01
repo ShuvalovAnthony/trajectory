@@ -1,5 +1,7 @@
 from django.db import models
 from users.models import CustomUser
+from autoslug import AutoSlugField
+from tinymce.models import HTMLField
 
 
 class Course(models.Model):
@@ -16,7 +18,9 @@ class Theme(models.Model):
     course = models.ForeignKey('Course', on_delete=models.PROTECT, null=True)
     status = models.ForeignKey('ThemeStatus', on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=30)
+    title_on_en = models.CharField(max_length=30)
     description = models.CharField(max_length=120)
+    slug = AutoSlugField(populate_from='title_on_en')
 
     def __str__(self) -> str:
         return self.title
@@ -26,8 +30,10 @@ class Step(models.Model):
     theme = models.ForeignKey('Theme', on_delete=models.PROTECT, null=True)
     status = models.ForeignKey('StepStatus', on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=30)
+    title_on_en = models.CharField(max_length=30)
     description = models.CharField(max_length=120)
-    content = models.TextField(max_length=500)
+    content = HTMLField()
+    slug = AutoSlugField(populate_from='title_on_en')
 
     def __str__(self) -> str:
         return self.title
