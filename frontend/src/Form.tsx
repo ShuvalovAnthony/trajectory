@@ -1,10 +1,7 @@
 import { Component } from 'solid-js';
 import { useFormHandler, yupSchema } from 'solid-form-handler';
-import { Checkboxes } from './components/Checkboxes';
 import { TextInput } from './components/TextInput';
-import { Checkbox } from './components/Checkbox';
 import { Select } from './components/Select';
-import { Radios } from './components/Radios';
 
 import * as yup from 'yup';
 

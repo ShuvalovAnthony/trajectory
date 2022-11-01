@@ -1,4 +1,5 @@
 const Mainpage = () => {
+    
     return (
         <main class="px-3 text-center">
             <p  style="margin-bottom:3cm"></p>
