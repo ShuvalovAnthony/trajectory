@@ -5,6 +5,10 @@ from .permissions import IsAdminOrReadOnly
 from django.http.response import HttpResponse
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.authentication import TokenAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authtoken.models import Token
+
 
 
 class APIListPagination(pagination.PageNumberPagination):
@@ -39,17 +43,29 @@ class CourseViewSet(viewsets.ModelViewSet):
     pagination_class = APIListPagination
 
 
+
 class NoteViewSet(viewsets.ModelViewSet):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
-    permission_classes = ()
+    permission_classes = (IsAdminOrReadOnly,) # IsAuthenticated, -если требуется токен   
     pagination_class = APIListPagination
+    authentication_classes = (TokenAuthentication, BasicAuthentication)
+
 
     @action(methods=['get'], detail=True) # detailFalse - для списка
     def note_by_step(self, request, pk=None):
-        notes = Note.objects.filter(step_id=pk) #pk категории стоит в url step/1/steps_by_theme/
-        
-        return Response({'notes': [n.note for n in notes]})
+        try: # для запросов по апи
+            token = request.headers["Authorization"].split()[1]
+            user = Token.objects.get(key=token).user # юзер по токену из хэдеров
+            notes = Note.objects.filter(step_id=pk, user=user) #pk категории стоит в url step/1/steps_by_theme/
+        except: # веб запросы - без фильтра по юзеру
+            notes = Note.objects.filter(step_id=pk)
+        return Response({'notes': [{
+            "id": n.id,
+            "note": n.note,
+            "user": n.user.id,
+        }
+            for n in notes]})
 
 
 def test(request):

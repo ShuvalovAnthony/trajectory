@@ -5,8 +5,6 @@ import { TextInput } from './components/TextInput';
 import * as yup from 'yup';
 
 
-
-
 type Note = {
     note: string;
 };
@@ -30,7 +28,16 @@ const fetchStep = async (stepid: number) =>
 
 
 const fetchNotes = async (stepid: number) =>
-    (await fetch(`http://127.0.0.1:8000/api/v1/note/${stepid}/note_by_step/`)).json();
+    (await fetch(`http://127.0.0.1:8000/api/v1/note/${stepid}/note_by_step/`,
+    {
+        method: 'GET',
+        headers: {
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + window.localStorage.getItem("AuthToken"),
+        },
+    }
+    )).json();
 
 
 
@@ -53,7 +60,7 @@ const Planpage = () => {
         if (themesList() && stepsList()) {
             setThemes(themesList().results);
             setSteps(stepsList().results);
-            setNotes(notesList().notes);
+            setNotes(notesList().notes);            
         }
     })
 
@@ -152,7 +159,7 @@ const Planpage = () => {
                         <For each={notes()}>
                             {(note: any, index: Accessor<number>) => {
                                 return <>
-                                    <p class="word">{note}</p>
+                                    <p class="word">{note.note}</p>
                                 </>
                             }}
                         </For>
