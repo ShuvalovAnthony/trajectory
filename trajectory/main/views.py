@@ -6,13 +6,13 @@ from django.http.response import HttpResponse
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.authtoken.models import Token
 
 
 
 class APIListPagination(pagination.PageNumberPagination):
-    page_size = 10
+    page_size = 50
     page_size_query_param = 'page_size'
     max_page_size = 100
 
@@ -22,6 +22,7 @@ class StepViewSet(viewsets.ModelViewSet):
     serializer_class = StepSerializer
     permission_classes = ()
     pagination_class = APIListPagination
+    authentication_classes = (TokenAuthentication, BasicAuthentication)
 
     @action(methods=['get'], detail=True) # detailFalse - для списка
     def steps_by_theme(self, request, pk=None):
@@ -32,8 +33,9 @@ class StepViewSet(viewsets.ModelViewSet):
 class ThemeViewSet(viewsets.ModelViewSet):
     queryset = Theme.objects.all()
     serializer_class = ThemeSerializer
-    permission_classes = ()
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     pagination_class = APIListPagination
+    authentication_classes = (TokenAuthentication, BasicAuthentication)
 
 
 class CourseViewSet(viewsets.ModelViewSet):
@@ -41,16 +43,15 @@ class CourseViewSet(viewsets.ModelViewSet):
     serializer_class = CourseSerializer
     permission_classes = ()
     pagination_class = APIListPagination
-
+    authentication_classes = (TokenAuthentication, BasicAuthentication)
 
 
 class NoteViewSet(viewsets.ModelViewSet):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
-    permission_classes = (IsAdminOrReadOnly,) # IsAuthenticated, -если требуется токен   
+    permission_classes = (IsAuthenticatedOrReadOnly,) # IsAuthenticated, -если требуется токен   
     pagination_class = APIListPagination
     authentication_classes = (TokenAuthentication, BasicAuthentication)
-
 
     @action(methods=['get'], detail=True) # detailFalse - для списка
     def note_by_step(self, request, pk=None):
