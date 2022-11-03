@@ -40,7 +40,6 @@ const fetchNotes = async (stepid: number) =>
     )).json();
 
 
-
 const Planpage = () => {
     const [themes, setThemes] = createSignal();
     const [steps, setSteps] = createSignal();
@@ -55,12 +54,18 @@ const Planpage = () => {
         const stepid = parseInt(e.target.dataset.stepid);
         setStepId(stepid);
     }
+    
+    function isStep (step: any) {
+        try { return step.title }
+        catch { return false }
+    }
 
     createEffect(() => {
-        if (themesList() && stepsList()) {
+        if (themesList() && stepsList() && notesList()) {
             setThemes(themesList().results);
             setSteps(stepsList().results);
-            setNotes(notesList().notes);            
+            setNotes(notesList().notes);    
+            console.log(step());
         }
     })
 
@@ -142,7 +147,8 @@ const Planpage = () => {
             <div class="container-fluid p-3 ">
                 <div class="row">
                     <div class="col-8">
-                        {step() && (
+                        {isStep(step()) 
+                        ? (
                             <>
                                 <a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
                                     <span class="fs-3 fw-semibold">{step().title}</span>
@@ -150,7 +156,15 @@ const Planpage = () => {
                                 <div innerHTML={step().content}>
                                 </div>
                             </>
-                        )}
+                        )
+                        : (
+                            <>
+                                <a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
+                                    <span class="fs-3 fw-semibold">Выберите урок</span>
+                                </a>
+                            </>
+                        )
+                    }
                     </div>
                     <div class="col-3">
                         <a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">

@@ -32,7 +32,7 @@ class Step(models.Model):
     title = models.CharField(max_length=30)
     title_on_en = models.CharField(max_length=30)
     description = models.CharField(max_length=120)
-    content = HTMLField()
+    content = HTMLField(blank=True)
     slug = AutoSlugField(populate_from='title_on_en')
 
     def __str__(self) -> str:
