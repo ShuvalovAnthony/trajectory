@@ -1,8 +1,8 @@
 import { Routes, Route } from "@solidjs/router"
 
-import Mainpage from "./Mainpage"
-import Coursepage from "./Coursepage"
-import Auth from "./Auth"
+import Mainpage from "./navigation/Mainpage"
+import Coursepage from "./apps/Coursepage"
+import Auth from "./apps/Auth"
 
 
 export default function App() {

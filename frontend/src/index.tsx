@@ -3,7 +3,7 @@ import { Router } from "@solidjs/router";
 
 
 import App from "./App";
-import Header from "./Header"
+import Header from "./navigation/Header"
 
 
 

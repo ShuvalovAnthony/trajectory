@@ -1,6 +1,6 @@
 import { Component } from 'solid-js';
 import { useFormHandler, yupSchema } from 'solid-form-handler';
-import { TextInput } from './components/TextInput';
+import { TextInput } from '../components/TextInput';
 
 import * as yup from 'yup';
 
