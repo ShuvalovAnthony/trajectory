@@ -1,7 +1,6 @@
 import { createSignal, createResource, createEffect, For, Accessor } from "solid-js";
 import { useFormHandler, yupSchema } from 'solid-form-handler';
 import { TextInput } from '../components/TextInput';
-import { mergeProps } from "solid-js";
 
 import * as yup from 'yup';
 
