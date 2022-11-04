@@ -80,7 +80,7 @@ const Notes = (props: NoteProps) => {
             formHandler.resetForm();
         } catch (error) {
             console.error(error);
-        }
+        }        
     };
 
     return (
