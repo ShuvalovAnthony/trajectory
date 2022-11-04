@@ -1,18 +1,8 @@
 import { createSignal, createResource, createEffect, For, Accessor } from "solid-js";
-import { useFormHandler, yupSchema } from 'solid-form-handler';
-import { TextInput } from '../components/TextInput';
+import { createStore } from "solid-js/store";
 
 import * as yup from 'yup';
-
-
-type Note = {
-    note: string;
-};
-
-export const noteSchema: yup.SchemaOf<Note> = yup.object({
-    note: yup.string().required('Введите заметку').max(25),
-});
-
+import Notes from '../apps/Notes'
 
 
 async function fetchThemes() {
@@ -27,89 +17,33 @@ const fetchStep = async (stepid: number) =>
     (await fetch(`http://127.0.0.1:8000/api/v1/step/${stepid}/`)).json();
 
 
-const fetchNotes = async (stepid: number) =>
-    (await fetch(`http://127.0.0.1:8000/api/v1/note/${stepid}/note_by_step/`,
-    {
-        method: 'GET',
-        headers: {
-            'Accept-Encoding': 'gzip, deflate, br',
-            'Content-Type': 'application/json',
-            'Authorization': 'Token ' + window.localStorage.getItem("AuthToken"),
-        },
-    }
-    )).json();
+
 
 
 const Planpage = () => {
     const [themes, setThemes] = createSignal();
     const [steps, setSteps] = createSignal();
     const [stepId, setStepId] = createSignal(0);
-    const [notes, setNotes] = createSignal(0);
     const [themesList] = createResource(fetchThemes);
     const [stepsList] = createResource(fetchSteps);
-    const [notesList] = createResource(stepId, fetchNotes);
     const [step] = createResource(stepId, fetchStep);
 
     const toggle = (e: any) => {
         const stepid = parseInt(e.target.dataset.stepid);
-        setStepId(stepid);
+        setStepId(stepid);   
     }
-    
-    function isStep (step: any) {
+
+    function isStep(step: any) {
         try { return step.title }
         catch { return false }
     }
 
     createEffect(() => {
-        if (themesList() && stepsList() && notesList()) {
+        if (themesList() && stepsList()) {
             setThemes(themesList().results);
             setSteps(stepsList().results);
-            setNotes(notesList().notes);    
-            console.log(step());
         }
     })
-
-
-    const formHandler = useFormHandler(yupSchema(noteSchema));
-    const { formData } = formHandler;
-
-    const add_note = async (event: Event) => {
-        event.preventDefault();
-        try {
-            await formHandler.validateForm();
-            console.log(JSON.stringify(formData()));
-
-            fetch('http://127.0.0.1:8000/api/v1/note/', {
-                method: 'POST',
-                headers: {
-                    'Accept-Encoding': 'gzip, deflate, br',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Token ' + window.localStorage.getItem("AuthToken"),
-                },
-                body: JSON.stringify({
-                    'note': formData().note,
-                    'step': stepId()
-                })
-            }).then(function (response) {
-                // Стоит проверить код ответа.
-                if (!response.ok) {
-                    // Сервер вернул код ответа за границами диапазона [200, 299]
-                    return Promise.reject(new Error(
-                        'Response failed: ' + response.status + ' (' + response.statusText + ')'
-                    ));
-                }
-                // Далее будем использовать только JSON из тела ответа.
-                return response.json();
-            }).then(function (data) {
-                console.log(data);
-            }).catch(function (error) {
-                console.log(error);
-            });
-            formHandler.resetForm();
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
 
     return (
@@ -119,14 +53,14 @@ const Planpage = () => {
                     <span class="fs-3 fw-semibold">Список тем</span>
                 </a>
                 <ul class="list-unstyled ps-0">
-                    <For each={themes()}>{(theme: any, index: Accessor<number>) =>
+                    <For each={Object(themes())}>{(theme: any, index: Accessor<number>) =>
                         <li class="mb-0">
                             <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target={'#' + theme.slug} aria-expanded="false">
                                 {theme.title}
                             </button>
                             <div class="collapse" id={theme.slug}>
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-0 small">
-                                    <For each={steps()}>
+                                    <For each={Object(steps())}>
                                         {(step: any, index: Accessor<number>) => {
                                             if (step.theme == theme.id) {
                                                 return <>
@@ -147,51 +81,26 @@ const Planpage = () => {
             <div class="container-fluid p-3 ">
                 <div class="row">
                     <div class="col-8">
-                        {isStep(step()) 
-                        ? (
-                            <>
-                                <a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
-                                    <span class="fs-3 fw-semibold">{step().title}</span>
-                                </a>
-                                <div innerHTML={step().content}>
-                                </div>
-                            </>
-                        )
-                        : (
-                            <>
-                                <a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
-                                    <span class="fs-3 fw-semibold">Выберите урок</span>
-                                </a>
-                            </>
-                        )
-                    }
-                    </div>
-                    <div class="col-3">
-                        <a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
-                            <span class="fs-3 fw-semibold">Заметки</span>
-                        </a>
-                        <For each={notes()}>
-                            {(note: any, index: Accessor<number>) => {
-                                return <>
-                                    <p class="word">{note.note}</p>
-                                </>
-                            }}
-                        </For>
-
-                        <section>
-                                <form onSubmit={add_note}>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <TextInput placeholder="Заметка" name="note" formHandler={formHandler} />
-                                        </div>
-                                        <div class="col">
-                                            <button class="btn btn-secondary" disabled={formHandler.isFormInvalid()}>Добавить</button>
-                                        </div>
+                        {isStep(step())
+                            ? (
+                                <>
+                                    <a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
+                                        <span class="fs-3 fw-semibold">{step().title}</span>
+                                    </a>
+                                    <div innerHTML={step().content}>
                                     </div>
-                                </form>
-                        </section>
-
+                                </>
+                            )
+                            : (
+                                <>
+                                    <a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
+                                        <span class="fs-3 fw-semibold">Выберите урок</span>
+                                    </a>
+                                </>
+                            )
+                        }
                     </div>
+                    <Notes stepId={stepId()}/>
                 </div>
             </div>
         </main>
