@@ -20,7 +20,8 @@ const Themes = () => {
 
 
     const toggle = (e: any) => {
-        const stepid = parseInt(e.target.dataset.stepid);
+        const id = e.srcElement.dataset.stepid || e.target.dataset.stepid;
+        const stepid = parseInt(id);
         setStepId(stepid);
     }
 
@@ -51,7 +52,7 @@ const Themes = () => {
                                             {(step: any, index: Accessor<number>) => {
                                                 if (step.theme == theme.id) {
                                                     return <>
-                                                        <button class="btn d-inline-flex align-items-center rounded border-0" onClick={toggle}>
+                                                        <button data-stepid={step.id} class="btn d-inline-flex align-items-center rounded border-0" onClick={toggle}>
                                                             <a data-stepid={step.id} class="link-light d-inline-flex text-decoration-none rounded small">
                                                                 {step.title}
                                                             </a>
