@@ -10,7 +10,6 @@ async function fetchSteps() {
     return (await fetch('http://127.0.0.1:8000/api/v1/step/')).json()
 }
 
-
 const Themes = () => {
     const [themes, setThemes] = createSignal();
     const [steps, setSteps] = createSignal();
@@ -36,7 +35,6 @@ const Themes = () => {
         <>
             <main class="d-flex">
                 <div class="flex-shrink-0 p-3 bg-dark" style="width: 260px;">
-
                     <a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
                         <span class="fs-3 fw-semibold">Список тем</span>
                     </a>
@@ -52,7 +50,7 @@ const Themes = () => {
                                             {(step: any, index: Accessor<number>) => {
                                                 if (step.theme == theme.id) {
                                                     return <>
-                                                        <button data-stepid={step.id} class="btn d-inline-flex align-items-center rounded border-0" onClick={toggle}>
+                                                        <button data-stepid={step.id} onClick={toggle} class="btn d-inline-flex align-items-center rounded border-0">
                                                             <a data-stepid={step.id} class="link-light d-inline-flex text-decoration-none rounded small">
                                                                 {step.title}
                                                             </a>
@@ -75,7 +73,6 @@ const Themes = () => {
             </main>
         </>
     )
-
 }
 
 export default Themes;

@@ -21,7 +21,6 @@ class CustomUser(AbstractUser, PermissionsMixin):
     nickname = models.CharField(
         verbose_name='Username',
         max_length=30,
-        unique=True,
         error_messages={
             'unique': 'Пользователь с таким никнеймом уже зарегистрировался'
         }
@@ -29,7 +28,6 @@ class CustomUser(AbstractUser, PermissionsMixin):
     phone = models.CharField(
         verbose_name='Номер телефона',
         max_length=11,
-        unique=True,
         error_messages={
             'unique': 'Пользователь с таким номером уже зарегистрировался'
         }
