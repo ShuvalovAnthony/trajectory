@@ -27,15 +27,15 @@ const fetchNotes = async (stepid: number) =>
 
 // тип пропса
 interface NoteProps {
-        stepId: number;
-    }
+    stepId: number;
+}
 
 // пропс доступен только!!! в шаблоне
 
 const Notes = (props: NoteProps) => {
     const [notes, setNotes] = createSignal([]);
     const [notesList] = createResource(() => props.stepId, fetchNotes);
-    
+
     createEffect(() => {
         if (notesList()) {
             setNotes(notesList().notes);
@@ -80,7 +80,7 @@ const Notes = (props: NoteProps) => {
             formHandler.resetForm();
         } catch (error) {
             console.error(error);
-        }        
+        }
     };
 
     return (
@@ -98,17 +98,19 @@ const Notes = (props: NoteProps) => {
                 </For>
 
                 <section>
-                    <form onSubmit={add_note}>
-                        <div class="row">
-                            <div class="col-6">
-                                <TextInput placeholder="Заметка" name="note" formHandler={formHandler} />
+                    {props.stepId && (
+                        <form onSubmit={add_note}>
+                            <div class="row">
+                                <div class="col-6">
+                                    <TextInput placeholder="Заметка" name="note" formHandler={formHandler} />
+                                </div>
+                                <div class="col">
+                                    <button class="btn btn-secondary" disabled={formHandler.isFormInvalid()}>Добавить</button>
+                                    <br></br>
+                                </div>
                             </div>
-                            <div class="col">
-                                <button class="btn btn-secondary" disabled={formHandler.isFormInvalid()}>Добавить</button>
-                                <br></br>                                
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    )}
                 </section>
             </div>
         </>

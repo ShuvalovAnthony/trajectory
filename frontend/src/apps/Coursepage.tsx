@@ -1,10 +1,19 @@
 import Themes from '../apps/Themes'
+import { CheckAuth } from "../auth/CheckAuth";
 
 // вынести темы отдельно
 const Planpage = () => {
     return (
         <>
-            <Themes />
+        {CheckAuth() ? (
+            
+                <Themes />
+            
+        )
+        :
+        (
+            <></>
+        )}
         </>
     );
 };
