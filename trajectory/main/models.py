@@ -40,6 +40,10 @@ class Step(models.Model):
         return self.title
 
 
+class SubStep(models.Model):
+    title = models.CharField(max_length=30)
+
+
 class File(models.Model):
     title = models.CharField(max_length=30)
     file = models.FileField(blank=True)

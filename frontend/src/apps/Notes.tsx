@@ -85,33 +85,44 @@ const Notes = (props: NoteProps) => {
 
     return (
         <>
-            <div class="col-3">
-                <a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
-                    <span class="fs-3 fw-semibold">Заметки</span>
-                </a>
-                <For each={notes()}>
-                    {(note: any, index: Accessor<number>) => {
-                        return <>
-                            <p class="word">{note.note}</p>
-                        </>
-                    }}
-                </For>
 
-                <section>
-                    {props.stepId && (
-                        <form onSubmit={add_note}>
-                            <div class="row">
-                                <div class="col-6">
-                                    <TextInput placeholder="Заметка" name="note" formHandler={formHandler} />
+            <div class="d-flex p-3 bg-dark ms-auto" style="transform: rotate(90deg);">
+                <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                    Заметки
+                </button>
+
+            </div>
+
+
+            <div class="offcanvas offcanvas-end text-bg-dark " tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header ">
+                    <h5 class="offcanvas-title " id="offcanvasRightLabel">Заметки</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <For each={notes()}>
+                        {(note: any, index: Accessor<number>) => {
+                            return <>
+                                <p class="word">{note.note}</p>
+                            </>
+                        }}
+                    </For>
+                    <section>
+                        {props.stepId && (
+                            <form onSubmit={add_note}>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <TextInput placeholder="Заметка" name="note" formHandler={formHandler} />
+                                    </div>
+                                    <div class="col">
+                                        <button class="btn btn-secondary" disabled={formHandler.isFormInvalid()}>Добавить</button>
+                                        <br></br>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <button class="btn btn-secondary" disabled={formHandler.isFormInvalid()}>Добавить</button>
-                                    <br></br>
-                                </div>
-                            </div>
-                        </form>
-                    )}
-                </section>
+                            </form>
+                        )}
+                    </section>
+                </div>
             </div>
         </>
     );

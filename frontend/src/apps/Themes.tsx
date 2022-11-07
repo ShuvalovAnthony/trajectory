@@ -52,7 +52,7 @@ const Themes = () => {
                                                     return <>
                                                         <button data-stepid={step.id} onClick={toggle} class="btn d-inline-flex align-items-center rounded border-0">
                                                             <a data-stepid={step.id} class="link-light d-inline-flex text-decoration-none rounded small">
-                                                                {step.title} {status}
+                                                                {step.title}
                                                             </a>
                                                         </button></>
                                                 }
@@ -66,9 +66,14 @@ const Themes = () => {
                 </div>
                 <div class="container-fluid p-3 ">
                     <div class="row">
-                        <Step stepId={stepId()} />
-                        <Notes stepId={stepId()} />
+                        <div class="col">
+                            <Step stepId={stepId()} />
+                        </div>
+                        <div class="col-1">
+                            <Notes stepId={stepId()} />
+                        </div>
                     </div>
+
                 </div>
             </main>
         </>
