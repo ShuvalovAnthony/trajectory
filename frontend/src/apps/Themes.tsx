@@ -48,11 +48,11 @@ const Themes = () => {
                                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-0 small">
                                         <For each={Object(steps())}>
                                             {(step: any, index: Accessor<number>) => {
-                                                if (step.theme == theme.id) {
+                                                if (step.theme === theme.id) {
                                                     return <>
                                                         <button data-stepid={step.id} onClick={toggle} class="btn d-inline-flex align-items-center rounded border-0">
                                                             <a data-stepid={step.id} class="link-light d-inline-flex text-decoration-none rounded small">
-                                                                {step.title}
+                                                                {step.title} {status}
                                                             </a>
                                                         </button></>
                                                 }
@@ -65,11 +65,11 @@ const Themes = () => {
                     </ul>
                 </div>
                 <div class="container-fluid p-3 ">
-                <div class="row">
-                    <Step stepId={stepId()} />
-                    <Notes stepId={stepId()} />
+                    <div class="row">
+                        <Step stepId={stepId()} />
+                        <Notes stepId={stepId()} />
+                    </div>
                 </div>
-            </div>
             </main>
         </>
     )
