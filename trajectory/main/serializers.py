@@ -25,6 +25,13 @@ class StepSerializer(serializers.ModelSerializer):
       fields = "__all__"
 
 
+class StepStatusSerializer(serializers.ModelSerializer):
+
+   class Meta:
+      model = StepStatus
+      fields = "__all__"
+
+
 class NoteSerializer(serializers.ModelSerializer):
    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 

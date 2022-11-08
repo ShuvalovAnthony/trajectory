@@ -1,5 +1,5 @@
 from rest_framework import viewsets, pagination
-from .serializers import CourseSerializer, NoteSerializer, StepSerializer, ThemeSerializer
+from .serializers import *
 from .models import *
 from .permissions import IsAdminOrReadOnly
 from django.http.response import HttpResponse
@@ -28,6 +28,14 @@ class StepViewSet(viewsets.ModelViewSet):
     def steps_by_theme(self, request, pk=None):
         steps = Step.objects.filter(theme_id=pk) #pk категории стоит в url step/1/steps_by_theme/
         return Response({'steps': [{"id": s.id, "title": s.title} for s in steps]})
+
+
+class StepStatusViewSet(viewsets.ModelViewSet):
+    queryset = StepStatus.objects.all()
+    serializer_class = StepStatusSerializer
+    permission_classes = ()
+    pagination_class = APIListPagination
+    authentication_classes = (TokenAuthentication, BasicAuthentication)
 
 
 class ThemeViewSet(viewsets.ModelViewSet):

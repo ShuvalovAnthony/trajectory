@@ -40,8 +40,25 @@ class Step(models.Model):
         return self.title
 
 
-class SubStep(models.Model):
-    title = models.CharField(max_length=30)
+class StepStatus(models.Model):
+    step = models.ForeignKey('Step', on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(CustomUser, verbose_name='User', on_delete=models.CASCADE)
+    STATUS_CHOICES = [
+        ('NS', 'Не начат'),
+        ('OW', 'На изучении'),
+        ('WA', 'Ошибка выполнения'),
+        ('OK', 'Шаг пройден'),
+    ]
+    status = models.CharField(
+        verbose_name='Статус',
+        max_length=2,
+        choices=STATUS_CHOICES,
+        default='NS',
+        null=True,
+    )
+
+    def __str__(self) -> str:
+        return self.step.title + ' ' + self.user.email
 
 
 class File(models.Model):
