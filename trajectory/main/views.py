@@ -10,7 +10,6 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 from rest_framework.authtoken.models import Token
 
 
-
 class APIListPagination(pagination.PageNumberPagination):
     page_size = 50
     page_size_query_param = 'page_size'
@@ -24,23 +23,49 @@ class StepViewSet(viewsets.ModelViewSet):
     pagination_class = APIListPagination
     authentication_classes = (TokenAuthentication, BasicAuthentication)
 
-    @action(methods=['get'], detail=True) # detailFalse - для списка
+    @action(methods=['get'], detail=True)  # detailFalse - для списка
     def steps_by_theme(self, request, pk=None):
-        steps = Step.objects.filter(theme_id=pk) #pk категории стоит в url step/1/steps_by_theme/
+        # pk категории стоит в url step/1/steps_by_theme/
+        steps = Step.objects.filter(theme_id=pk)
+        print(steps)
         return Response({'steps': [{"id": s.id, "title": s.title} for s in steps]})
 
-    def retrieve(self, request, *args, **kwargs):
-        try: # для запросов по апи
+    @action(methods=['get'], detail=False)  # detailFalse - для списка
+    def steps_by_theme_with_status(self, request):
+        try:  # для запросов по апи
             token = request.headers["Authorization"].split()[1]
-            user = Token.objects.get(key=token).user # юзер по токену из хэдеров
-            step = Step.objects.get(pk=int(kwargs['pk'])) # step по pk из ссылки
+            # юзер по токену из хэдеров
+            user = Token.objects.get(key=token).user
+            steps_with_status = StepStatus.objects.filter(user=user)
+        except:
+            steps_with_status = StepStatus.objects.all()
+        return Response({
+            'steps': [
+                {"step_status_id": s.id,
+                 "step_id": s.step.id,
+                 "title": s.step.title,
+                 "status": s.status,
+                 "theme_id": s.step.theme.id,
+                 } for s in steps_with_status
+            ]
+        }
+        )
+
+    def retrieve(self, request, *args, **kwargs):
+        try:  # для запросов по апи
+            token = request.headers["Authorization"].split()[1]
+            # юзер по токену из хэдеров
+            user = Token.objects.get(key=token).user
+            # step по pk из ссылки
+            step = Step.objects.get(id=int(kwargs['pk']))
             error = False
-        except: # веб запросы - без фильтра по юзеру
+        except:  # веб запросы - без фильтра по юзеру
             error = True
-        
+
         if not error:
             try:
-                step_status = StepStatus.objects.get(user=user, step=step) # статус для юзера и урока
+                step_status = StepStatus.objects.get(
+                    user=user, step=step)  # статус для юзера и урока
                 kwargs['status'] = step_status.status
             except:
                 step_status = StepStatus.objects.create(user=user, step=step)
@@ -57,6 +82,17 @@ class StepStatusViewSet(viewsets.ModelViewSet):
     permission_classes = ()
     pagination_class = APIListPagination
     authentication_classes = (TokenAuthentication, BasicAuthentication)
+
+    @action(methods=['get'], detail=True)  # detailFalse - для списка
+    def step_status_check(self, request, pk=None):
+        try:  # для запросов по апи
+            token = request.headers["Authorization"].split()[1]
+            # юзер по токену из хэдеров
+            user = Token.objects.get(key=token).user
+            step_status = StepStatus.objects.get(user=user, step=pk)
+        except:  # веб запросы - без фильтра по юзеру
+            return Response({'error': 'Cant load data'})
+        return Response({'step_id': pk, 'status': step_status.status, 'step_status_id': step_status.id})
 
 
 class ThemeViewSet(viewsets.ModelViewSet):
@@ -78,17 +114,20 @@ class CourseViewSet(viewsets.ModelViewSet):
 class NoteViewSet(viewsets.ModelViewSet):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,) # IsAuthenticated, -если требуется токен   
+    # IsAuthenticated, -если требуется токен
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     pagination_class = APIListPagination
     authentication_classes = (TokenAuthentication, BasicAuthentication)
 
-    @action(methods=['get'], detail=True) # detailFalse - для списка
+    @action(methods=['get'], detail=True)  # detailFalse - для списка
     def note_by_step(self, request, pk=None):
-        try: # для запросов по апи
+        try:  # для запросов по апи
             token = request.headers["Authorization"].split()[1]
-            user = Token.objects.get(key=token).user # юзер по токену из хэдеров
-            notes = Note.objects.filter(step_id=pk, user=user) #pk категории стоит в url step/1/steps_by_theme/
-        except: # веб запросы - без фильтра по юзеру
+            # юзер по токену из хэдеров
+            user = Token.objects.get(key=token).user
+            # pk категории стоит в url step/1/steps_by_theme/
+            notes = Note.objects.filter(step_id=pk, user=user)
+        except:  # веб запросы - без фильтра по юзеру
             notes = Note.objects.filter(step_id=pk)
         return Response({'notes': [{
             "id": n.id,

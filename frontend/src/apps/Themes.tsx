@@ -2,13 +2,26 @@ import { createSignal, createResource, createEffect, For, Accessor } from "solid
 import Notes from '../apps/Notes'
 import Step from '../apps/Step'
 
+
 async function fetchThemes() {
     return (await fetch('http://127.0.0.1:8000/api/v1/theme/')).json()
 }
 
 async function fetchSteps() {
-    return (await fetch('http://127.0.0.1:8000/api/v1/step/')).json()
+    return (await fetch('http://127.0.0.1:8000/api/v1/step/steps_by_theme_with_status/',
+    {
+        method: 'GET',
+        headers: {
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + window.localStorage.getItem("AuthToken"),
+        },
+    }
+    )).json()
 }
+
+
+
 
 const Themes = () => {
     const [themes, setThemes] = createSignal();
@@ -16,7 +29,6 @@ const Themes = () => {
     const [themesList] = createResource(fetchThemes);
     const [stepsList] = createResource(fetchSteps);
     const [stepId, setStepId] = createSignal(0);
-
 
     const toggle = (e: any) => {
         const id = e.srcElement.dataset.stepid || e.target.dataset.stepid;
@@ -27,7 +39,7 @@ const Themes = () => {
     createEffect(() => {
         if (themesList() && stepsList()) {
             setThemes(themesList().results);
-            setSteps(stepsList().results);
+            setSteps(stepsList().steps);
         }
     })
 
@@ -48,11 +60,11 @@ const Themes = () => {
                                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-0 small">
                                         <For each={Object(steps())}>
                                             {(step: any, index: Accessor<number>) => {
-                                                if (step.theme === theme.id) {
+                                                if (step.theme_id === theme.id) {
                                                     return <>
-                                                        <button data-stepid={step.id} onClick={toggle} class="btn d-inline-flex align-items-center rounded border-0">
-                                                            <a data-stepid={step.id} class="link-light d-inline-flex text-decoration-none rounded small">
-                                                                {step.title}
+                                                        <button data-stepid={step.step_id} onClick={toggle} class="btn d-inline-flex align-items-center rounded border-0">
+                                                            <a data-stepid={step.step_id} class="link-light d-inline-flex text-decoration-none rounded small">
+                                                                {step.title} {step.status == 'OK' ? <>🟢</> : <>🔴</>}
                                                             </a>
                                                         </button></>
                                                 }

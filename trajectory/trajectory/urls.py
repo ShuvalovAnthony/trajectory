@@ -5,7 +5,7 @@ from main.views import *
 from rest_framework import routers
 
 router = routers.DefaultRouter() 
-router.register(r'step', StepViewSet)
+router.register(r'step', StepViewSet,) # basename if queryset changed
 router.register(r'theme', ThemeViewSet)
 router.register(r'course', CourseViewSet)
 router.register(r'note', NoteViewSet)
