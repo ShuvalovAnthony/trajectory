@@ -2,7 +2,16 @@ import { createResource } from "solid-js";
 
 
 const fetchStep = async (stepid: number) =>
-    (await fetch(`http://127.0.0.1:8000/api/v1/step/${stepid}/`)).json();
+    (await fetch(`http://127.0.0.1:8000/api/v1/step/${stepid}/`,
+        {
+            method: 'GET',
+            headers: {
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Content-Type': 'application/json',
+                'Authorization': 'Token ' + window.localStorage.getItem("AuthToken"),
+            },
+        }
+    )).json();
 
 
 // тип пропса
@@ -32,15 +41,15 @@ const Step = (props: StepProps) => {
 
                         <button data-stepid="" class="btn d-inline-flex align-items-center rounded border-0">
                             <a data-stepid="" class="link-light d-inline-flex text-decoration-none rounded small">
-                                <h6>Отметить выполненным</h6>   
+                                <h6>Отметить выполненным</h6>
                             </a>
                         </button></>
-    )
+                )
                 : (
-    <><a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
-        <span class="fs-3 fw-semibold">Выберите урок</span>
-    </a></>
-)
+                    <><a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
+                        <span class="fs-3 fw-semibold">Выберите урок</span>
+                    </a></>
+                )
             }
         </>
     );
