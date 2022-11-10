@@ -24,8 +24,8 @@ export const fetchStepStatus = async (stepid: number) =>
     )).json();
 
 
-export const stepStatusOK = async (stepid: number,stepstatusid: number) =>
-    ( await fetch(`http://127.0.0.1:8000/api/v1/stepstatus/${stepstatusid}/`,
+export const stepStatusOK = async (stepid: number, stepstatusid: number) =>
+(await fetch(`http://127.0.0.1:8000/api/v1/stepstatus/${stepstatusid}/`,
     {
         method: 'PUT',
         headers: {
@@ -38,4 +38,23 @@ export const stepStatusOK = async (stepid: number,stepstatusid: number) =>
             "step": stepid
         })
     }
-    ));
+));
+
+
+export async function fetchThemes() {
+    return (await fetch('http://127.0.0.1:8000/api/v1/theme/')).json()
+}
+
+
+export async function fetchSteps() {
+    return (await fetch('http://127.0.0.1:8000/api/v1/step/steps_by_theme_with_status/',
+        {
+            method: 'GET',
+            headers: {
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Content-Type': 'application/json',
+                'Authorization': 'Token ' + window.localStorage.getItem("AuthToken"),
+            },
+        }
+    )).json()
+}

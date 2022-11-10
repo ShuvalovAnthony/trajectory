@@ -1,26 +1,7 @@
 import { createSignal, createResource, createEffect, For, Accessor } from "solid-js";
 import Notes from '../apps/Notes'
 import Step from '../apps/Step'
-
-
-async function fetchThemes() {
-    return (await fetch('http://127.0.0.1:8000/api/v1/theme/')).json()
-}
-
-async function fetchSteps() {
-    return (await fetch('http://127.0.0.1:8000/api/v1/step/steps_by_theme_with_status/',
-    {
-        method: 'GET',
-        headers: {
-            'Accept-Encoding': 'gzip, deflate, br',
-            'Content-Type': 'application/json',
-            'Authorization': 'Token ' + window.localStorage.getItem("AuthToken"),
-        },
-    }
-    )).json()
-}
-
-
+import { fetchThemes, fetchSteps} from "../apps/Utils";
 
 
 const Themes = () => {

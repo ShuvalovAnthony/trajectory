@@ -27,7 +27,6 @@ class StepViewSet(viewsets.ModelViewSet):
     def steps_by_theme(self, request, pk=None):
         # pk категории стоит в url step/1/steps_by_theme/
         steps = Step.objects.filter(theme_id=pk)
-        print(steps)
         return Response({'steps': [{"id": s.id, "title": s.title} for s in steps]})
 
     @action(methods=['get'], detail=False)  # detailFalse - для списка
