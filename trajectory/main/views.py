@@ -50,30 +50,6 @@ class StepViewSet(viewsets.ModelViewSet):
         }
         )
 
-    def retrieve(self, request, *args, **kwargs):
-        try:  # для запросов по апи
-            token = request.headers["Authorization"].split()[1]
-            # юзер по токену из хэдеров
-            user = Token.objects.get(key=token).user
-            # step по pk из ссылки
-            step = Step.objects.get(id=int(kwargs['pk']))
-            error = False
-        except:  # веб запросы - без фильтра по юзеру
-            error = True
-
-        if not error:
-            try:
-                step_status = StepStatus.objects.get(
-                    user=user, step=step)  # статус для юзера и урока
-                kwargs['status'] = step_status.status
-            except:
-                step_status = StepStatus.objects.create(user=user, step=step)
-                step_status.save()
-                kwargs['status'] = step_status.status
-        else:
-            kwargs['status'] = 'NS'
-        return super().retrieve(request, *args, **kwargs)
-
 
 class StepStatusViewSet(viewsets.ModelViewSet):
     queryset = StepStatus.objects.all()
