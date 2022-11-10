@@ -118,3 +118,40 @@ const Notes = (props: NoteProps) => {
 };
 
 export default Notes;
+
+
+
+
+
+
+
+import Themes from '../apps/Themes'
+import { CheckAuth } from "../auth/CheckAuth";
+import { createSignal, createResource, createEffect } from "solid-js";
+
+// вынести темы отдельно
+const Planpage = () => {
+    const [courseId, setCourseId] = createSignal(0);
+
+    createEffect(() => {
+        console.log("Course Id now is", courseId());
+      });
+
+    return (
+        <>
+        
+        {CheckAuth() && courseId() ? (
+                <Themes course={courseId()}/>
+        )
+        :
+        (
+            <>
+            <button onClick={() => setCourseId(1)}>Python</button>
+            <button onClick={() => setCourseId(2)}>Ege</button>
+            </>
+        )}
+        </>
+    );
+};
+
+export default Planpage;

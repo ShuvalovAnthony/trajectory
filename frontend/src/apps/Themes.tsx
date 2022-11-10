@@ -1,13 +1,13 @@
 import { createSignal, createResource, createEffect, For, Accessor } from "solid-js";
 import Notes from '../apps/Notes'
 import Step from '../apps/Step'
-import { fetchThemes, fetchSteps} from "../apps/Utils";
+import { fetchThemes, fetchSteps, fetchThemesByCourse } from "../apps/Utils";
 
 
-const Themes = () => {
+const Themes = (course: any) => {
     const [themes, setThemes] = createSignal();
     const [steps, setSteps] = createSignal();
-    const [themesList] = createResource(fetchThemes);
+    const [themesList] = createResource(course.course, fetchThemesByCourse);
     const [stepsList] = createResource(fetchSteps);
     const [stepId, setStepId] = createSignal(0);
 
@@ -19,7 +19,7 @@ const Themes = () => {
 
     createEffect(() => {
         if (themesList() && stepsList()) {
-            setThemes(themesList().results);
+            setThemes(themesList().themes);
             setSteps(stepsList().steps);
         }
     })

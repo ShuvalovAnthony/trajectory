@@ -77,6 +77,23 @@ class ThemeViewSet(viewsets.ModelViewSet):
     pagination_class = APIListPagination
     authentication_classes = (TokenAuthentication, BasicAuthentication)
 
+    @action(methods=['get'], detail=True)  # detailFalse - для списка
+    def theme_by_course(self, request, pk=None):
+        # pk категории стоит в url theme/1/theme_by_course/
+        themes = Theme.objects.filter(course_id=pk)
+        return Response({'themes': [
+            {
+                "id": s.id,
+                 "title": s.title,
+                 "title_on_en": s.title_on_en,
+                 "description": s.description,
+                 "slug": s.slug,
+                 "is_published": s.is_published,
+                 "course": s.course_id,
+            } for s in themes
+            ]
+            })
+
 
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
