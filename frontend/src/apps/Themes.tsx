@@ -2,6 +2,7 @@ import { createSignal, createResource, createEffect, For, Accessor } from "solid
 import Notes from '../apps/Notes'
 import Step from '../apps/Step'
 import { fetchThemes, fetchSteps, fetchThemesByCourse } from "../apps/Utils";
+import { useParams } from "@solidjs/router"
 
 
 const Themes = (course: any) => {

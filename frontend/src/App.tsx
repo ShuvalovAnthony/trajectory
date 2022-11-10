@@ -4,6 +4,7 @@ import Mainpage from "./navigation/Mainpage"
 import Coursepage from "./apps/Coursepage"
 import Login from "./auth/Login"
 import Register from "./auth/Register"
+import Themes from "./apps/Themes"
 
 export default function App() {
   return <>

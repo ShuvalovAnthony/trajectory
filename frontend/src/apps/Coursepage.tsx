@@ -19,7 +19,6 @@ const Planpage = () => {
 
     return (
         <>
-
             {CheckAuth() && courseId() ? (
                 <Themes course={courseId()} />
             )
@@ -31,8 +30,6 @@ const Planpage = () => {
                             <h1>Выберите курс</h1>
                             <br></br>
                             <div class="row justify-content-center">
-
-
                                     <For each={Object(courses())}>
                                         {(course: any, index: Accessor<number>) => {
                                             return <>
@@ -44,14 +41,11 @@ const Planpage = () => {
                                                             <button type="button" class="btn btn-light" onClick={() => setCourseId(course.id)}>Открыть</button>
                                                         </div>
                                                     </div>
-                                                    
                                                 </div>
                                             </>
                                         }
                                         }
                                     </For>
-
-
                             </div>
                         </main>
                     </>
