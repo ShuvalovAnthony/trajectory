@@ -1,11 +1,15 @@
 import Themes from '../apps/Themes'
 import { CheckAuth } from "../auth/CheckAuth";
-import { createSignal, createResource, createEffect, For, Accessor } from "solid-js";
+import { createSignal, createResource, createEffect, For, Accessor, createMemo } from "solid-js";
 import { fetchCourses } from "../apps/Utils";
+import { useParams, A } from "@solidjs/router"
+
 
 // вынести темы отдельно
-const Planpage = () => {
-    const [courseId, setCourseId] = createSignal(0);
+const Planpage = (courseid: any) => {
+    const params = useParams();
+
+    const [courseId, setCourseId] = createSignal(params.courseid);
     const [courses, setCourses] = createSignal();
     const [courseList] = createResource(fetchCourses);
 
@@ -38,7 +42,7 @@ const Planpage = () => {
                                                         <div class="card-body">
                                                             <h5 class="card-title">{ course.title }</h5>
                                                             <p class="card-text">{ course.description }</p>
-                                                            <button type="button" class="btn btn-light" onClick={() => setCourseId(course.id)}>Открыть</button>
+                                                            <A href={String(course.id)} class="text-light"><h5>Открыть</h5></A>
                                                         </div>
                                                     </div>
                                                 </div>

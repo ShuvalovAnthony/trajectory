@@ -78,6 +78,8 @@ const Notes = (props: NoteProps) => {
                 console.log(error);
             });
             formHandler.resetForm();
+            console.log((notes()));
+            
         } catch (error) {
             console.error(error);
         }

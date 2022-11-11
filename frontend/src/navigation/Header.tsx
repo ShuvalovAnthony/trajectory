@@ -1,5 +1,7 @@
 import { CheckAuth } from "../auth/CheckAuth";
 import { Logout } from "../auth/Logout";
+import { useParams, A } from "@solidjs/router"
+
 
 const Header = () => {
     return (

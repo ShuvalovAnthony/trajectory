@@ -8,4 +8,4 @@ import Header from "./navigation/Header"
 
 
 render(() => <Router><App /></Router>, document.getElementById('root') as HTMLElement);
-render(() => <Header />, document.getElementById('header') as HTMLElement);
+render(() => <Router><Header /></Router>, document.getElementById('header') as HTMLElement);
