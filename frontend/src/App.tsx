@@ -1,14 +1,11 @@
-import { Routes, Route, A } from "@solidjs/router"
-import { lazy } from "solid-js";
+import { Routes, Route } from "@solidjs/router"
 
 
 import Mainpage from "./navigation/Mainpage"
 import Coursepage from "./apps/Coursepage"
 import Login from "./auth/Login"
 import Register from "./auth/Register"
-import Themes from "./apps/Themes"
-import Header
- from "./navigation/Header";
+
 
 export default function App() {
   return <>

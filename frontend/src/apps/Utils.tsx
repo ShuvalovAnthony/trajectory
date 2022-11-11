@@ -24,23 +24,6 @@ export const fetchStepStatus = async (stepid: number) =>
     )).json();
 
 
-export const stepStatusOK = async (stepid: number, stepstatusid: number) =>
-(await fetch(`http://127.0.0.1:8000/api/v1/stepstatus/${stepstatusid}/`,
-    {
-        method: 'PUT',
-        headers: {
-            'Accept-Encoding': 'gzip, deflate, br',
-            'Content-Type': 'application/json',
-            'Authorization': 'Token ' + window.localStorage.getItem("AuthToken"),
-        },
-        body: JSON.stringify({
-            "status": "OK",
-            "step": stepid
-        })
-    }
-));
-
-
 export async function fetchThemes() {
     return (await fetch('http://127.0.0.1:8000/api/v1/theme/')).json()
 }
@@ -75,3 +58,21 @@ export async function fetchSteps() {
         }
     )).json()
 }
+
+
+
+export const setStepStatus = async (stepid: number, stepstatusid: number, status: string) =>
+(await fetch(`http://127.0.0.1:8000/api/v1/stepstatus/${stepstatusid}/`,
+    {
+        method: 'PUT',
+        headers: {
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + window.localStorage.getItem("AuthToken"),
+        },
+        body: JSON.stringify({
+            "status": status,
+            "step": stepid
+        })
+    }
+));

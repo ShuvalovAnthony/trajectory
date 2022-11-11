@@ -1,5 +1,5 @@
 import { createResource } from "solid-js";
-import { fetchStep, fetchStepStatus, stepStatusOK } from "../apps/Utils";
+import { fetchStep, fetchStepStatus, setStepStatus } from "../apps/Utils";
 
 
 // тип пропса
@@ -19,7 +19,7 @@ const Step = (props: StepProps) => {
     }
 
     const status_ok = () => {
-        stepStatusOK(props.stepId, stepStatus().step_status_id);
+        setStepStatus(props.stepId, stepStatus().step_status_id, "OK");
         location.reload();
     }
 
