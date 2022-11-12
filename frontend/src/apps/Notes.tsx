@@ -62,7 +62,6 @@ const Notes = (props: NoteProps) => {
                 return response.json();
             }).then(function (data) {
                 console.log('Note was saved', data);
-                window.location.reload();
             }).catch(function (error) {
                 console.log(error);
             });
@@ -79,10 +78,8 @@ const Notes = (props: NoteProps) => {
                     <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                         Заметки
                     </button>
-
                 </div>)
             }
-
 
             <div class="offcanvas offcanvas-end text-bg-dark " tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
                 <div class="offcanvas-header ">
