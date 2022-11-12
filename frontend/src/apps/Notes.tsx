@@ -39,8 +39,6 @@ const Notes = (props: NoteProps) => {
         event.preventDefault();
         try {
             await formHandler.validateForm();
-            console.log(JSON.stringify(formData()));
-
             fetch('http://127.0.0.1:8000/api/v1/note/', {
                 method: 'POST',
                 headers: {
@@ -63,7 +61,8 @@ const Notes = (props: NoteProps) => {
                 // Далее будем использовать только JSON из тела ответа.
                 return response.json();
             }).then(function (data) {
-                console.log(data);
+                console.log('Note was saved', data);
+                window.location.reload();
             }).catch(function (error) {
                 console.log(error);
             });
@@ -75,13 +74,14 @@ const Notes = (props: NoteProps) => {
 
     return (
         <>
+            {(props.stepId != 0) && (
+                <div class="d-flex p-3 bg-dark ms-auto" style="transform: rotate(90deg);">
+                    <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                        Заметки
+                    </button>
 
-            <div class="d-flex p-3 bg-dark ms-auto" style="transform: rotate(90deg);">
-                <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                    Заметки
-                </button>
-
-            </div>
+                </div>)
+            }
 
 
             <div class="offcanvas offcanvas-end text-bg-dark " tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">

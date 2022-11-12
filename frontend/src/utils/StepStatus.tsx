@@ -11,3 +11,9 @@ export function stepStatus (stepstatus: string) {
     }
     return statuses[stepstatus]
 }
+
+
+export function isStep(step: any) {
+    try { return step.title }
+    catch { return false }
+}

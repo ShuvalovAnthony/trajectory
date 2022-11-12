@@ -15,9 +15,15 @@ class StepAdmin(admin.ModelAdmin):
         return None
 
 
+class NoteAdmin(admin.ModelAdmin):
+    fields = ('note', 'user', 'step')
+    list_display = ('note', 'user', 'step')
+    list_filter = ('user', 'step')
+
+
 admin.site.register(Course)
 admin.site.register(Theme)
 admin.site.register(Step, StepAdmin)
 admin.site.register(File)
-admin.site.register(Note)
+admin.site.register(Note, NoteAdmin)
 admin.site.register(StepStatus)

@@ -1,6 +1,6 @@
 import { createResource } from "solid-js";
 import { fetchStep, fetchStepStatus, setStepStatus } from "../utils/FetchUtils";
-
+import { isStep } from "../utils/StepStatus";
 
 // тип пропса
 interface StepProps {
