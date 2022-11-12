@@ -76,3 +76,16 @@ export const setStepStatus = async (stepid: number, stepstatusid: number, status
         })
     }
 ));
+
+
+export const fetchNotes = async (stepid: number) =>
+(await fetch(`http://127.0.0.1:8000/api/v1/note/${stepid}/note_by_step/`,
+    {
+        method: 'GET',
+        headers: {
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + window.localStorage.getItem("AuthToken"),
+        },
+    }
+)).json();

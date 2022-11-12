@@ -1,7 +1,7 @@
 import { createSignal, createResource, createEffect, For, Accessor } from "solid-js";
 import { useFormHandler, yupSchema } from 'solid-form-handler';
 import { TextInput } from '../components/TextInput';
-
+import { fetchNotes } from "../utils/FetchUtils"
 import * as yup from 'yup';
 
 
@@ -13,17 +13,7 @@ export const noteSchema: yup.SchemaOf<Note> = yup.object({
     note: yup.string().required('Введите заметку').max(25),
 });
 
-const fetchNotes = async (stepid: number) =>
-    (await fetch(`http://127.0.0.1:8000/api/v1/note/${stepid}/note_by_step/`,
-        {
-            method: 'GET',
-            headers: {
-                'Accept-Encoding': 'gzip, deflate, br',
-                'Content-Type': 'application/json',
-                'Authorization': 'Token ' + window.localStorage.getItem("AuthToken"),
-            },
-        }
-    )).json();
+
 
 // тип пропса
 interface NoteProps {

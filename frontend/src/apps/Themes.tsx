@@ -1,7 +1,7 @@
 import { createSignal, createResource, createEffect, For, Accessor } from "solid-js";
 import Notes from '../apps/Notes'
 import Step from '../apps/Step'
-import { fetchSteps, fetchThemesByCourse } from "../apps/Utils";
+import { fetchSteps, fetchThemesByCourse } from "../utils/FetchUtils";
 
 
 const Themes = (course: any) => {
@@ -45,7 +45,8 @@ const Themes = (course: any) => {
                                                     return <>
                                                         <button data-stepid={step.step_id} onClick={toggle} class="btn d-inline-flex align-items-center rounded border-0">
                                                             <a data-stepid={step.step_id} class="link-light d-inline-flex text-decoration-none rounded small">
-                                                                {step.title} {step.status == 'OK' ? <>🟢</> : <>🔴</>}
+                                                                {step.title} 
+                                                                { (step.status == 'OK') ? <>🟢</> : <>🔴</>}
                                                             </a>
                                                         </button></>
                                                 }

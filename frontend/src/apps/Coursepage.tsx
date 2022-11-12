@@ -1,12 +1,12 @@
 import Themes from '../apps/Themes'
 import { CheckAuth } from "../auth/CheckAuth";
 import { createSignal, createResource, createEffect, For, Accessor, createMemo } from "solid-js";
-import { fetchCourses } from "../apps/Utils";
+import { fetchCourses } from "../utils/FetchUtils";
 import { useParams, A } from "@solidjs/router"
 
 
 // вынести темы отдельно
-const Planpage = (courseid: any) => {
+const Coursepage = (courseid: any) => {
     const params = useParams();
 
     const [courseId, setCourseId] = createSignal(params.courseid);
@@ -58,4 +58,4 @@ const Planpage = (courseid: any) => {
     );
 };
 
-export default Planpage;
+export default Coursepage;

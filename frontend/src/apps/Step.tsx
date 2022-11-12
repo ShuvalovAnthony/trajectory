@@ -1,5 +1,5 @@
 import { createResource } from "solid-js";
-import { fetchStep, fetchStepStatus, setStepStatus } from "../apps/Utils";
+import { fetchStep, fetchStepStatus, setStepStatus } from "../utils/FetchUtils";
 
 
 // тип пропса
