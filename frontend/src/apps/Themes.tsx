@@ -2,6 +2,7 @@ import { createSignal, createResource, createEffect, For, Accessor } from "solid
 import Notes from '../apps/Notes'
 import Step from '../apps/Step'
 import { fetchSteps, fetchThemesByCourse } from "../utils/FetchUtils";
+import { stepStatus } from "../utils/StepStatus"
 
 
 const Themes = (course: any) => {
@@ -44,9 +45,9 @@ const Themes = (course: any) => {
                                                 if (step.theme_id === theme.id) {
                                                     return <>
                                                         <button data-stepid={step.step_id} onClick={toggle} class="btn d-inline-flex align-items-center rounded border-0">
+                                                            {stepStatus(step.status)}
                                                             <a data-stepid={step.step_id} class="link-light d-inline-flex text-decoration-none rounded small">
-                                                                {step.title} 
-                                                                { (step.status == 'OK') ? <>🟢</> : <>🔴</>}
+                                                                {step.title}
                                                             </a>
                                                         </button></>
                                                 }
