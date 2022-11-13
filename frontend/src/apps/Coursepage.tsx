@@ -1,9 +1,8 @@
 import Themes from '../apps/Themes'
 import { CheckAuth } from "../auth/CheckAuth";
-import { createSignal, createResource, createEffect, For, Accessor, createMemo } from "solid-js";
+import { createSignal, createResource, createEffect, For, Accessor } from "solid-js";
 import { fetchCourses } from "../utils/FetchUtils";
-import { useParams, A } from "@solidjs/router"
-
+import { useParams, A } from "@solidjs/router";
 
 // вынести темы отдельно
 const Coursepage = (courseid: any) => {
@@ -19,6 +18,8 @@ const Coursepage = (courseid: any) => {
             setCourses(courseList().results);
         }
     })
+
+    
 
 
     return (

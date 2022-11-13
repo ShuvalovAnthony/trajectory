@@ -278,3 +278,27 @@ const Notes = (props: NoteProps) => {
 };
 
 export default Notes;
+
+
+export function courseAccess(courseid: any) {
+    const [access, setAccess] = createSignal();
+    const [course_access] = createResource(Number(courseid), fetchCourseAccess);
+    
+    createEffect(() => {
+        if (course_access()) {
+            const date = new Date(course_access().expire_date);
+            const full_ac = course_access().full_access;
+            var d = new Date();
+            
+            if (date >= d || full_ac) {
+                setAccess(true);
+            }
+            else {
+                setAccess(false);
+            }
+        }
+    })
+    console.log(access());
+    
+    return true
+    };

@@ -4,6 +4,9 @@ from .models import *
 
 
 class StepAdmin(admin.ModelAdmin):
+    list_display = ('title', 'is_published', 'theme')
+    list_filter = ('title', 'is_published', 'theme')
+
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         for user in CustomUser.objects.all():

@@ -1,8 +1,10 @@
 import { createSignal, createResource, createEffect, For, Accessor } from "solid-js";
-import Notes from '../apps/Notes'
-import Step from '../apps/Step'
+import Notes from '../apps/Notes';
+import Step from '../apps/Step';
+import Pay from '../apps/Pay';
 import { fetchSteps, fetchThemesByCourse } from "../utils/FetchUtils";
 import { stepStatus } from "../utils/StepStatus"
+import { courseAccess } from "../utils/Access";
 
 
 const Themes = (course: any) => {
@@ -61,14 +63,20 @@ const Themes = (course: any) => {
                 </div>
                 <div class="container-fluid p-3 ">
                     <div class="row">
-                        <div class="col">
-                            <Step stepId={stepId()} />
-                        </div>
-                        <div class="col-1">
-                            <Notes stepId={stepId()} />
-                        </div>
+                        {courseAccess(course.course) ? (
+                            <>
+                                <div class="col">
+                                    <Step stepId={stepId()} />
+                                </div>
+                                <div class="col-1">
+                                    <Notes stepId={stepId()} />
+                                </div>
+                            </>
+                        )
+                            : (
+                                <Pay />
+                            )}
                     </div>
-
                 </div>
             </main>
         </>
