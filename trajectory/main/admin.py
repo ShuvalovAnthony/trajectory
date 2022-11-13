@@ -21,6 +21,8 @@ class NoteAdmin(admin.ModelAdmin):
     list_filter = ('user', 'step')
 
 
+
+admin.site.register(CourseAccess)
 admin.site.register(Course)
 admin.site.register(Theme)
 admin.site.register(Step, StepAdmin)

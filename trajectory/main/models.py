@@ -2,7 +2,7 @@ from django.db import models
 from users.models import CustomUser
 from autoslug import AutoSlugField
 from tinymce.models import HTMLField
-
+from django.utils import timezone
 
 class Course(models.Model):
     title = models.CharField(max_length=30)
@@ -76,3 +76,13 @@ class Note(models.Model):
 
     def __str__(self) -> str:
         return self.note
+
+
+class CourseAccess(models.Model):
+    user = models.ForeignKey(CustomUser, verbose_name='User', on_delete=models.CASCADE)
+    course = models.ForeignKey('Course', on_delete=models.PROTECT, null=True)
+    full_access = models.BooleanField(default=False)
+    expire_date = models.DateField(default=timezone.now)
+
+    def __str__(self) -> str:
+        return self.user.email
