@@ -24,8 +24,12 @@ class NoteAdmin(admin.ModelAdmin):
     list_filter = ('user', 'step')
 
 
+class CourseAccessAdmin(admin.ModelAdmin):
+    list_display = ('user', 'course', 'expire_date', 'full_access')
+    list_filter = ('user', 'course', 'expire_date', 'full_access')
 
-admin.site.register(CourseAccess)
+
+admin.site.register(CourseAccess, CourseAccessAdmin)
 admin.site.register(Course)
 admin.site.register(Theme)
 admin.site.register(Step, StepAdmin)
