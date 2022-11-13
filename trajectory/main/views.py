@@ -127,3 +127,23 @@ class NoteViewSet(viewsets.ModelViewSet):
             "user": n.user.id,
         }
             for n in notes]})
+
+
+class CourseAccessViewSet(viewsets.ModelViewSet):
+    queryset = CourseAccess.objects.all()
+    serializer_class = CourseAccessSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+    pagination_class = APIListPagination
+    authentication_classes = (TokenAuthentication, BasicAuthentication)
+
+    @action(methods=['get'], detail=True)  # detailFalse - для списка
+    def access_check(self, request, pk=None):
+        try:  # для запросов по апи
+            token = request.headers["Authorization"].split()[1]
+            # юзер по токену из хэдеров
+            user = Token.objects.get(key=token).user
+            course = Course.objects.get(pk=pk)
+            access = CourseAccess.objects.get(user=user, course=course)
+        except:  # веб запросы - без фильтра по юзеру
+            return Response({'error': 'Cant load data'})
+        return Response({"expire_date": access.expire_date, "full_access": access.full_access})

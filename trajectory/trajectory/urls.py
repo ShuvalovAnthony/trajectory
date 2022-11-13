@@ -10,6 +10,7 @@ router.register(r'theme', ThemeViewSet)
 router.register(r'course', CourseViewSet)
 router.register(r'note', NoteViewSet)
 router.register(r'stepstatus', StepStatusViewSet)
+router.register(r'courseaccess', CourseAccessViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -39,3 +39,11 @@ class NoteSerializer(serializers.ModelSerializer):
    class Meta:
       model = Note
       fields = "__all__"
+
+
+class CourseAccessSerializer(serializers.ModelSerializer):
+   user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+   class Meta:
+      model = CourseAccess
+      fields = "__all__"
