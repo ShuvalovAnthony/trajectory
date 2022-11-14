@@ -22,11 +22,12 @@ export function courseAccess(courseid: any) {
     
     createEffect(() => {
         if (course_access()) {
-            const date = new Date(course_access().expire_date);
-            const full_ac = course_access().full_access;
-            var d = new Date();
+            var current_date = new Date();
+            const user_expire_date = new Date(course_access().expire_date);
+
+            const user_full_access = course_access().full_access;
             
-            if (date >= d || full_ac) {
+            if (user_expire_date >= current_date || user_full_access) {
                 setAccess(true)
             }
             else {
@@ -36,3 +37,4 @@ export function courseAccess(courseid: any) {
     })
     return access()
     };
+
