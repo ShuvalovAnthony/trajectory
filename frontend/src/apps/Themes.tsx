@@ -5,6 +5,7 @@ import Pay from '../apps/Pay';
 import { fetchSteps, fetchThemesByCourse } from "../utils/FetchUtils";
 import { stepStatus } from "../utils/StepStatus"
 import { courseAccess } from "../utils/Access";
+import hljs from 'highlight.js';
 
 
 const Themes = (course: any) => {
@@ -18,6 +19,7 @@ const Themes = (course: any) => {
         const id = e.srcElement.dataset.stepid || e.target.dataset.stepid;
         const stepid = parseInt(id);
         setStepId(stepid);
+
     }
 
     createEffect(() => {

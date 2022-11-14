@@ -23,6 +23,6 @@ db.sqlite3
 # Environments
 
 venv/
-
+static/
 # Sandboxes
 sandbox.*

@@ -1,6 +1,6 @@
-import { createResource } from "solid-js";
+import { createResource, onMount, createEffect } from "solid-js";
 import { fetchStep, fetchStepStatus, setStepStatus } from "../utils/FetchUtils";
-import { isStep } from "../utils/StepStatus";
+import hljs from 'highlight.js';
 
 // тип пропса
 interface StepProps {
@@ -23,21 +23,29 @@ const Step = (props: StepProps) => {
         location.reload();
     }
 
+    createEffect(() => {
+        if (stepStatus()) {
+            hljs.highlightAll()
+        }
+    })
+
     return (
         <>
             {isStep(step())
                 ? (
-                    <><a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
-                        <span class="fs-3 fw-semibold">
-                            {step().title}
-                        </span>
-                    </a>
-                        <div innerHTML={step().content}></div>  
+                    <>
+                        <a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
+                            <span class="fs-3 fw-semibold">
+                                {step().title}
+                            </span>
+                        </a>
+                        <div innerHTML={step().content}></div>
                         <button onClick={status_ok} class="btn d-inline-flex align-items-center rounded border-0">
                             <a class="link-light d-inline-flex text-decoration-none rounded small">
                                 <h6>Отметить выполненным</h6>
                             </a>
-                        </button></>
+                        </button>
+                    </>
                 )
                 : (
                     <><a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
