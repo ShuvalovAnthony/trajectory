@@ -32,9 +32,7 @@ const Step = (props: StepProps) => {
                             {step().title}
                         </span>
                     </a>
-                        <div innerHTML={step().content}>
-                        </div>
-
+                        <div innerHTML={step().content}></div>  
                         <button onClick={status_ok} class="btn d-inline-flex align-items-center rounded border-0">
                             <a class="link-light d-inline-flex text-decoration-none rounded small">
                                 <h6>Отметить выполненным</h6>

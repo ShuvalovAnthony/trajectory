@@ -55,7 +55,9 @@ export const Register: Component = () => {
 
     return (
         <div class="container-fluid text-center ">
-            <p style="margin-bottom:4cm"></p>
+            <p style="margin-bottom:2cm"></p>
+            <h1>Регистрация</h1>
+            <p style="margin-bottom:2cm"></p>
             <div class="d-flex justify-content-center ">
                 <div class="col-2">
                     <form onSubmit={submit}>

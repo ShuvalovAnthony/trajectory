@@ -1,4 +1,4 @@
-import { createSignal, createResource, createEffect, For, Accessor } from "solid-js";
+import { createSignal, createResource, createEffect, For, Accessor, Suspense } from "solid-js";
 import Notes from '../apps/Notes';
 import Step from '../apps/Step';
 import Pay from '../apps/Pay';
@@ -62,21 +62,21 @@ const Themes = (course: any) => {
                     </ul>
                 </div>
                 <div class="container-fluid p-3 ">
-                    <div class="row">
-                        {courseAccess(course.course) ? (
-                            <>
-                                <div class="col">
-                                    <Step stepId={stepId()} />
-                                </div>
-                                <div class="col-1">
-                                    <Notes stepId={stepId()} />
-                                </div>
-                            </>
-                        )
-                            : (
-                                <Pay />
-                            )}
-                    </div>
+                        <div class="row">
+                            {courseAccess(course.course) ? (
+                                <>
+                                    <div class="col">
+                                        <Step stepId={stepId()} />
+                                    </div>
+                                    <div class="col-1">
+                                        <Notes stepId={stepId()} />
+                                    </div>
+                                </>
+                            )
+                                : (
+                                    <Pay />
+                                )}
+                        </div>
                 </div>
             </main>
         </>

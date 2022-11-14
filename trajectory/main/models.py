@@ -1,7 +1,6 @@
 from django.db import models
 from users.models import CustomUser
 from autoslug import AutoSlugField
-from tinymce.models import HTMLField
 from django.utils import timezone
 
 class Course(models.Model):
@@ -31,7 +30,7 @@ class Step(models.Model):
     title = models.CharField(max_length=30)
     title_on_en = models.CharField(max_length=30)
     description = models.CharField(max_length=120)
-    content = HTMLField(blank=True)
+    content = models.TextField()
     file = models.ForeignKey('File', on_delete=models.PROTECT, null=True, blank=True)
     slug = AutoSlugField(populate_from='title_on_en')
     is_published = models.BooleanField(default=True)
