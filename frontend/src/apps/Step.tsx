@@ -18,8 +18,8 @@ const Step = (props: StepProps) => {
         catch { return false }
     }
 
-    const status_ok = () => {
-        setStepStatus(props.stepId, stepStatus().step_status_id, "OK");
+    const set_status = (status: string) => {
+        setStepStatus(props.stepId, stepStatus().step_status_id, status);
         location.reload();
     }
 
@@ -39,10 +39,16 @@ const Step = (props: StepProps) => {
                                 {step().title}
                             </span>
                         </a>
-                        <div innerHTML={step().content}></div>
-                        <button onClick={status_ok} class="btn d-inline-flex align-items-center rounded border-0">
+                        <div innerHTML={step().content} class="border-bottom"></div>
+                        <br></br>
+                        <button onClick={() => set_status("OK")} class="btn d-inline-flex align-items-center rounded border-0">
                             <a class="link-light d-inline-flex text-decoration-none rounded small">
-                                <h6>Отметить выполненным</h6>
+                                <h6>Пройден 🟢</h6>
+                            </a>
+                        </button>
+                        <button onClick={() => set_status("OW")} class="btn d-inline-flex align-items-center rounded border-0">
+                            <a class="link-light d-inline-flex text-decoration-none rounded small">
+                                <h6>На изучении 🟡</h6>
                             </a>
                         </button>
                     </>
