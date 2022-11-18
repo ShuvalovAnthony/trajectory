@@ -7,4 +7,3 @@ RUN apk update && apk add python3-dev gcc libc-dev libffi-dev libpq-dev
 RUN pip3 install -r requirements.txt
 COPY . .
 RUN python manage.py collectstatic -v 3 --no-input
-RUN python manage.py migrate

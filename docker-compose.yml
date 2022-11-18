@@ -6,8 +6,6 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    volumes:
-       - ./data:/var/lib/postgresql/data
   backend:
     build:
       context: ./django

@@ -13,7 +13,8 @@ __pycache__/
 pip-log.txt
 pip-delete-this-directory.txt
 
-
+# nginx
+nginx-setup.conf
 
 # Django stuff:
 *.log
