@@ -21,7 +21,7 @@ settings.py
 db.sqlite3
 
 # Environments
-
+.env
 venv/
 static/
 # Sandboxes
