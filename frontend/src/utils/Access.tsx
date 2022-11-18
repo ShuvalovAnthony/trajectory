@@ -1,8 +1,9 @@
 import { createResource, createSignal, createEffect } from "solid-js";
 
 
+
 export const fetchCourseAccess = async (courseid: number) =>
-(await fetch(`http://127.0.0.1:8000/api/v1/courseaccess/${courseid}/access_check/`,
+(await fetch(`http://${import.meta.env.VITE_URL_ADRESS_PORT8}/api/v1/courseaccess/${courseid}/access_check/`,
     {
         method: 'GET',
         headers: {

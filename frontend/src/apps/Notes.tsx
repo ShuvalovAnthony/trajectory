@@ -39,7 +39,7 @@ const Notes = (props: NoteProps) => {
         event.preventDefault();
         try {
             await formHandler.validateForm();
-            fetch('http://127.0.0.1:8000/api/v1/note/', {
+            fetch(`http://${import.meta.env.VITE_URL_ADRESS_PORT8}/api/v1/note/`, {
                 method: 'POST',
                 headers: {
                     'Accept-Encoding': 'gzip, deflate, br',

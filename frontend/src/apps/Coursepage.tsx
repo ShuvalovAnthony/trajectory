@@ -19,9 +19,6 @@ const Coursepage = (courseid: any) => {
         }
     })
 
-    
-
-
     return (
         <>
             {CheckAuth() && courseId() ? (
