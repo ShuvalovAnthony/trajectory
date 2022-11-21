@@ -6,6 +6,9 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGDATA: /data/postgres
+    volumes:
+       - postgres:/data/postgres
   backend:
     build:
       context: ./django
@@ -29,5 +32,7 @@ services:
     depends_on:
       - backend
       - frontend
+
 volumes:
   frontend_dist:
+  postgres:
