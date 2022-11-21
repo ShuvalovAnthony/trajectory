@@ -19,6 +19,7 @@ nginx-setup.conf
 # Django stuff:
 *.log
 db.sqlite3
+settings.py
 
 # Environments
 .env
