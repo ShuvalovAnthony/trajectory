@@ -4,6 +4,7 @@ const Mainpage = () => {
         <main class="px-3 text-center">
             <p  style="margin-bottom:3cm"></p>
             <h1>PySchool</h1>
+            <br></br>
             <p class="lead">Онлайн образовательная платформа</p>
         </main>
     );
