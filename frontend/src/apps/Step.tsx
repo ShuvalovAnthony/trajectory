@@ -20,11 +20,10 @@ const Step = (props: StepProps) => {
 
     const set_status = (status: string) => {
         setStepStatus(props.stepId, stepStatus().step_status_id, status);
-        location.reload();
     }
 
     createEffect(() => {
-        if (stepStatus()) {
+        if (step()) {
             hljs.highlightAll()
         }
     })
