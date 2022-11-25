@@ -1,4 +1,4 @@
-import { createResource, onMount, createEffect } from "solid-js";
+import { createResource, createEffect } from "solid-js";
 import { fetchStep, fetchStepStatus, setStepStatus } from "../utils/FetchUtils";
 import hljs from 'highlight.js';
 
@@ -10,6 +10,7 @@ interface StepProps {
 // пропс доступен только!!! в шаблоне
 
 const Step = (props: StepProps) => {
+    hljs.configure({'ignoreUnescapedHTML': true})
     const [step] = createResource(() => props.stepId, fetchStep);
     const [stepStatus] = createResource(() => props.stepId, fetchStepStatus);
 
@@ -24,7 +25,7 @@ const Step = (props: StepProps) => {
 
     createEffect(() => {
         if (step()) {
-            hljs.highlightAll()
+            hljs.highlightAll();
         }
     })
 
