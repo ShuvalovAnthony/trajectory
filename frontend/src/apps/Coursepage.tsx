@@ -4,7 +4,7 @@ import { createSignal, createResource, createEffect, For, Accessor } from "solid
 import { fetchCourses } from "../utils/FetchUtils";
 import { useParams, A } from "@solidjs/router";
 
-// вынести темы отдельно
+
 const Coursepage = (courseid: any) => {
     const params = useParams();
 
