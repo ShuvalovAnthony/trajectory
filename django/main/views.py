@@ -45,6 +45,7 @@ class StepViewSet(viewsets.ModelViewSet):
                  "title": s.step.title,
                  "status": s.status,
                  "theme_id": s.step.theme.id,
+                 "is_published": s.step.is_published,
                  } for s in steps_with_status
             ]
         }
