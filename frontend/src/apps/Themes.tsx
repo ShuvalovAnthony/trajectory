@@ -44,7 +44,7 @@ const Themes = (course: any) => {
                                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-0 small">
                                         <For each={Object(steps())}>
                                             {(step: any, index: Accessor<number>) => {
-                                                if (step.theme_id === theme.id) {
+                                                if ((step.theme_id === theme.id) && (step.is_published)){
                                                     return <>
                                                         <button data-stepid={step.step_id} onClick={toggle} class="btn d-inline-flex align-items-center rounded border-0">
                                                             {stepStatus(step.status)}

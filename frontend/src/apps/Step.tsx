@@ -31,12 +31,12 @@ const Step = (props: StepProps) => {
 
     return (
         <>
-            {isStep(step())
+            {(isStep(step()) && step().is_published)
                 ? (
                     <>
                         <a class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom">
                             <span class="fs-3 fw-semibold">
-                                {step().title} {step().is_published}
+                                {step().title}
                             </span>
                         </a>
                         <div innerHTML={step().content} class="border-bottom"></div>
