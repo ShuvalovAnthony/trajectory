@@ -39,7 +39,9 @@ const Step = (props: StepProps) => {
                                 {step().title}
                             </span>
                         </a>
+
                         <div innerHTML={step().content} class="border-bottom"></div>
+
                         <br></br>
                         <button onClick={() => set_status("OK")} class="btn d-inline-flex align-items-center rounded border-0">
                             <a class="link-light d-inline-flex text-decoration-none rounded small">
