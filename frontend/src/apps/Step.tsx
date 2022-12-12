@@ -10,7 +10,7 @@ interface StepProps {
 // пропс доступен только!!! в шаблоне
 
 const Step = (props: StepProps) => {
-    hljs.configure({'ignoreUnescapedHTML': true})
+    hljs.configure({ 'ignoreUnescapedHTML': true })
     const [step] = createResource(() => props.stepId, fetchStep);
     const [stepStatus] = createResource(() => props.stepId, fetchStepStatus);
 
