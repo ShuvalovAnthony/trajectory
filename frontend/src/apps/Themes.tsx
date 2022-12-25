@@ -44,7 +44,7 @@ const Themes = (course: any) => {
                                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-0 small">
                                         <For each={Object(steps())}>
                                             {(step: any, index: Accessor<number>) => {
-                                                if ((step.theme_id === theme.id) && (step.is_published)){
+                                                if ((step.theme_id === theme.id) && (step.is_published)) {
                                                     return <>
                                                         <button data-stepid={step.step_id} onClick={toggle} class="btn d-inline-flex align-items-center rounded border-0">
                                                             {stepStatus(step.status)}
@@ -60,23 +60,23 @@ const Themes = (course: any) => {
                             </li>
                         }</For>
                     </ul>
+                    <div class="col-1">
+                        <Notes stepId={stepId()} />
+                    </div>
                 </div>
                 <div class="container-fluid p-3 ">
-                        <div class="row">
-                            {courseAccess(course.course) ? (
-                                <>
-                                    <div class="col">
-                                        <Step stepId={stepId()} />
-                                    </div>
-                                    <div class="col-1">
-                                        <Notes stepId={stepId()} />
-                                    </div>
-                                </>
-                            )
-                                : (
-                                    <Pay />
-                                )}
-                        </div>
+                    <div class="row">
+                        {courseAccess(course.course) ? (
+                            <>
+                                <div class="col">
+                                    <Step stepId={stepId()} />
+                                </div>
+                            </>
+                        )
+                            : (
+                                <Pay />
+                            )}
+                    </div>
                 </div>
             </main>
         </>

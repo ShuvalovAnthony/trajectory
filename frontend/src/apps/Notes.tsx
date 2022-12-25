@@ -24,10 +24,12 @@ interface NoteProps {
 
 const Notes = (props: NoteProps) => {
     const [notes, setNotes] = createSignal([]);
-    const [notesList] = createResource(() => props.stepId, fetchNotes);
+    const [count, setCount] = createSignal(1);
+    const [notesList] = createResource(() => count(), fetchNotes);
 
     createEffect(() => {
         if (notesList()) {
+            setCount(props.stepId);
             setNotes(notesList().notes);
         }
     })
@@ -74,8 +76,14 @@ const Notes = (props: NoteProps) => {
     return (
         <>
             {(props.stepId != 0) && (
-                <div class="d-flex p-3 bg-dark ms-auto" style="transform: rotate(90deg);">
-                    <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                <div class="d-flex p-3 bg-dark ms-auto">
+                    <button
+                        class="btn btn-secondary"
+                        type="button"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasRight"
+                        aria-controls="offcanvasRight"
+                    >
                         Заметки
                     </button>
                 </div>)
@@ -102,7 +110,11 @@ const Notes = (props: NoteProps) => {
                                         <TextInput placeholder="Заметка" name="note" formHandler={formHandler} />
                                     </div>
                                     <div class="col">
-                                        <button class="btn btn-secondary" disabled={formHandler.isFormInvalid()}>Добавить</button>
+                                        <button
+                                            class="btn btn-secondary"
+                                            disabled={formHandler.isFormInvalid()}
+                                            onClick={() => setCount(count() + 1)}
+                                        >Добавить</button>
                                         <br></br>
                                     </div>
                                 </div>
