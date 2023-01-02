@@ -5,7 +5,7 @@ import Mainpage from "./navigation/Mainpage"
 import Coursepage from "./apps/Coursepage"
 import Login from "./auth/Login"
 import Register from "./auth/Register"
-
+import Landing from "./apps/Landing"
 
 export default function App() {
   return <>
@@ -15,6 +15,7 @@ export default function App() {
       <Route path="/courses/:courseid" component={Coursepage} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
+      <Route path="/landing" component={Landing} />
     </Routes>
   </>
 }

@@ -62,7 +62,7 @@ export const AuthApp: Component = () => {
             <p style="margin-bottom:2cm"></p>
             
             <div class="d-flex justify-content-center ">
-                <div class="col-2">
+                <div class="col-auto">
                     <form onSubmit={submit}>
                         <TextInput placeholder="Email" name="email" formHandler={formHandler} />
                         <p></p>

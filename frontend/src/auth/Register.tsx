@@ -42,6 +42,7 @@ export const Register: Component = () => {
             }).then(function (data) {
                 window.location.href = "/login"
             }).catch(function (error) {
+                alert('Слишком простой пароль/Неверный формат email');
                 console.log(error);
             });
 
@@ -59,7 +60,7 @@ export const Register: Component = () => {
             <h1>Регистрация</h1>
             <p style="margin-bottom:2cm"></p>
             <div class="d-flex justify-content-center ">
-                <div class="col-2">
+                <div class="col-auto">
                     <form onSubmit={submit}>
                         <TextInput placeholder="Email" name="email" formHandler={formHandler} />
                         <p></p>

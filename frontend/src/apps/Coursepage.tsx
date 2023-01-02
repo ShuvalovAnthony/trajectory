@@ -35,8 +35,8 @@ const Coursepage = (courseid: any) => {
                                     <For each={Object(courses())}>
                                         {(course: any, index: Accessor<number>) => {
                                             return <>
-                                                <div class="col-3">
-                                                    <div class="card text-bg-secondary">
+                                                <div class="col-auto mb-3">
+                                                    <div class="card text-bg-secondary" style="width: 18rem;">
                                                         <div class="card-body">
                                                             <h5 class="card-title">{ course.title }</h5>
                                                             <p class="card-text">{ course.description }</p>
