@@ -21,6 +21,7 @@ const Step = (props: StepProps) => {
 
     const set_status = (status: string) => {
         setStepStatus(props.stepId, stepStatus().step_status_id, status);
+        window.location.reload();
     }
 
     createEffect(() => {
@@ -39,8 +40,10 @@ const Step = (props: StepProps) => {
                                 {step().title}
                             </span>
                         </a>
-
-                        <div innerHTML={step().content} class="border-bottom"></div>
+                        
+                        <div innerHTML={step().content} class="border-bottom">
+                            
+                        </div>
 
                         <br></br>
                         <button onClick={() => set_status("OK")} class="btn d-inline-flex align-items-center rounded border-0">
