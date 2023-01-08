@@ -5,6 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from main.views import *
 from rest_framework import routers
+from landing.views import *
 
 router = routers.DefaultRouter() 
 router.register(r'step', StepViewSet,) # basename if queryset changed
@@ -13,6 +14,7 @@ router.register(r'course', CourseViewSet)
 router.register(r'note', NoteViewSet)
 router.register(r'stepstatus', StepStatusViewSet)
 router.register(r'courseaccess', CourseAccessViewSet)
+router.register(r'lead', LeadViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
