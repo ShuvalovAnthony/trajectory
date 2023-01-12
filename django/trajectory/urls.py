@@ -15,6 +15,8 @@ router.register(r'note', NoteViewSet)
 router.register(r'stepstatus', StepStatusViewSet)
 router.register(r'courseaccess', CourseAccessViewSet)
 router.register(r'lead', LeadViewSet)
+router.register(r'parent', ParentViewSet)
+router.register(r'children', ChildrenViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

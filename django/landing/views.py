@@ -23,3 +23,18 @@ class LeadViewSet(viewsets.ModelViewSet):
     pagination_class = APIListPagination
     authentication_classes = (TokenAuthentication, BasicAuthentication)
 
+
+class ParentViewSet(viewsets.ModelViewSet):
+    queryset = Parent.objects.all()
+    serializer_class = ParentSerializer
+    permission_classes = ()
+    pagination_class = APIListPagination
+    authentication_classes = (TokenAuthentication, BasicAuthentication)
+
+
+class ChildrenViewSet(viewsets.ModelViewSet):
+    queryset = Children.objects.all()
+    serializer_class = ChildrenSerializer
+    permission_classes = ()
+    pagination_class = APIListPagination
+    authentication_classes = (TokenAuthentication, BasicAuthentication)
