@@ -14,10 +14,10 @@ type Lead = {
     children_class_number: number;
 };
 
-
 export const leadSchema: yup.SchemaOf<Lead> = yup.object({
+    
     email: yup.string().email('Неверный формат email').required('Введите email'),
-    phone: yup.string().required('Введите телефон'),
+    phone: yup.string().matches(/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/, 'Неверный номер телефона').required('Введите телефон'),
     parent_first_name: yup.string().required('Введите имя'),
     parent_last_name: yup.string().required('Введите фамилию'),
     parent_middle_name: yup.string(),
@@ -91,7 +91,7 @@ const Landing = () => {
                         <p></p>
                         <TextInput placeholder="Класс ребенка" name="children_class_number" formHandler={formHandler} />
                         <p></p>
-                        <TextInput placeholder="Заметка" name="extra" formHandler={formHandler} />
+                        <TextInput placeholder="Любой комментарий" name="extra" formHandler={formHandler} />
                         <p></p>
                         <button class="btn btn-secondary" disabled={formHandler.isFormInvalid()}>Отправить заявку</button>
                     </form>
