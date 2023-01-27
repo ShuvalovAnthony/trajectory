@@ -9,20 +9,18 @@ type Lead = {
     phone: string;
     parent_first_name: string;
     parent_last_name: string;
-    children_first_name: string;
-    children_last_name: string;
     children_class_number: number;
 };
 
 export const leadSchema: yup.SchemaOf<Lead> = yup.object({
-    
+
     email: yup.string().email('Неверный формат email').required('Введите email'),
     phone: yup.string().matches(/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/, 'Неверный номер телефона').required('Введите телефон'),
     parent_first_name: yup.string().required('Введите имя'),
     parent_last_name: yup.string().required('Введите фамилию'),
     parent_middle_name: yup.string(),
-    children_first_name: yup.string().required('Введите имя ученика'),
-    children_last_name: yup.string().required('Введите фамилию ученика'),
+    children_first_name: yup.string(),
+    children_last_name: yup.string(),
     children_middle_name: yup.string(),
     children_class_number: yup.number().typeError('Введите число').required('Введите класс ученика'),
     extra: yup.string(),
@@ -55,6 +53,7 @@ const Landing = () => {
                 return response.json();
             }).then(function (data) {
                 console.log(data, window.localStorage.getItem("AuthToken"));
+                alert('Заявка успешно отправлена');
             }).catch(function (error) {
                 console.log(error);
             });
@@ -67,38 +66,46 @@ const Landing = () => {
 
     return (
         <div class="container-fluid text-center ">
-            <h1>Лендинг</h1>
-            <p></p>
-            
-            <div class="d-flex justify-content-center ">
-                <div class="col-auto">
-                    <form onSubmit={submit}>
-                        <TextInput placeholder="Email" name="email" formHandler={formHandler} />
-                        <p></p>
-                        <TextInput placeholder="Телефон" name="phone" formHandler={formHandler} />
-                        <p></p>
-                        <TextInput placeholder="Фамилия" name="parent_last_name" formHandler={formHandler} />
-                        <p></p>
-                        <TextInput placeholder="Имя" name="parent_first_name" formHandler={formHandler} />
-                        <p></p>
-                        <TextInput placeholder="Отчество" name="parent_middle_name" formHandler={formHandler} />
-                        <p></p>
-                        <TextInput placeholder="Фамилия ребенка" name="children_last_name" formHandler={formHandler} />
-                        <p></p>
-                        <TextInput placeholder="Имя ребенка" name="children_first_name" formHandler={formHandler} />
-                        <p></p>
-                        <TextInput placeholder="Отчество ребенка" name="children_middle_name" formHandler={formHandler} />
-                        <p></p>
-                        <TextInput placeholder="Класс ребенка" name="children_class_number" formHandler={formHandler} />
-                        <p></p>
-                        <TextInput placeholder="Любой комментарий" name="extra" formHandler={formHandler} />
-                        <p></p>
-                        <button class="btn btn-secondary" disabled={formHandler.isFormInvalid()}>Отправить заявку</button>
-                    </form>
-                </div>
-
+            <div class='m-5'>
+                <h3 class='m-3'>    Записаться на курсы</h3>
             </div>
+            <div class="d-flex justify-content-center ">
+
+
+                <form onSubmit={submit}>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5>Информация о родителе</h5>
+                            Обязательные поля отмечены *
+                            <img src="https://cdn-icons-png.flaticon.com/512/437/437501.png" style="width: 15rem;" class="img-thumbnail m-2"></img>
+                        </div>
+                        <div class="col-md-3">
+                            <TextInput placeholder="Email*" name="email" formHandler={formHandler} class="m-2" />
+                            <TextInput placeholder="Телефон*" name="phone" formHandler={formHandler} class="m-2" />
+                            <TextInput placeholder="Класс ребенка*" name="children_class_number" formHandler={formHandler} class="m-2" />
+                            <TextInput placeholder="Фамилия*" name="parent_last_name" formHandler={formHandler} class="m-2" />
+                            <TextInput placeholder="Имя*" name="parent_first_name" formHandler={formHandler} class="m-2" />
+                            <TextInput placeholder="Отчество" name="parent_middle_name" formHandler={formHandler} class="m-2" />
+                            <TextInput placeholder="Комментарий" name="extra" formHandler={formHandler} class="m-2" />
+                        </div>
+                        <div class="col-md-3">
+                            <h5>Информация об ученике</h5>
+                            Обязательные поля отмечены *
+                            <img src="https://cdn-icons-png.flaticon.com/512/3886/3886660.png" style="width: 15rem;" class="img-thumbnail m-2"></img>
+                        </div>
+                        <div class="col-md-3">
+                            <TextInput placeholder="Фамилия ребенка" name="children_last_name" formHandler={formHandler} class="m-2" />
+                            <TextInput placeholder="Имя ребенка" name="children_first_name" formHandler={formHandler} class="m-2" />
+                            <TextInput placeholder="Отчество ребенка" name="children_middle_name" formHandler={formHandler} class="m-2" />
+                        </div>
+
+                    </div>
+                    <button class="btn btn-secondary m-5" disabled={formHandler.isFormInvalid()}>Отправить заявку</button>
+                </form>
+            </div>
+
         </div>
+
     );
 };
 

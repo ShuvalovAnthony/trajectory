@@ -6,8 +6,8 @@ class Lead(models.Model):
     parent_last_name = models.CharField(max_length=30)
     parent_middle_name = models.CharField(max_length=30, blank=True)
 
-    children_first_name = models.CharField(max_length=30)
-    children_last_name = models.CharField(max_length=30)
+    children_first_name = models.CharField(max_length=30, blank=True)
+    children_last_name = models.CharField(max_length=30, blank=True)
     children_middle_name = models.CharField(max_length=30, blank=True)
     children_class_number = models.PositiveIntegerField()
 
