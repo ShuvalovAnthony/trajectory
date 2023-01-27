@@ -67,7 +67,7 @@ const Landing = () => {
     return (
         <div class="container-fluid text-center ">
             <div class='m-5'>
-                <h3 class='m-3'>    Записаться на курсы</h3>
+                <h3 class='m-3'>Записаться на курсы</h3>
             </div>
             <div class="d-flex justify-content-center ">
 
