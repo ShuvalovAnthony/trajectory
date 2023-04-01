@@ -77,3 +77,4 @@ class CustomUser(AbstractUser, PermissionsMixin):
 
     def __str__(self):
         return f'{self.last_name}{self.email}'
+    
